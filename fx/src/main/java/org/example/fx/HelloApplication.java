@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import proj2.bd.BLL.ClienteBLL;
 
 import java.io.IOException;
 

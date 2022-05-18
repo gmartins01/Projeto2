@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.fx.AdminController">
+   <children>
+      <Button layoutX="269.0" layoutY="271.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="132.0" text="Button" />
+      <Button layoutX="721.0" layoutY="265.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="132.0" text="Button" />
+      <Pane prefHeight="166.0" prefWidth="1106.0">
+         <children>
+            <Text layoutX="484.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu de Administrador" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
