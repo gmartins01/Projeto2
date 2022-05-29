@@ -45,17 +45,18 @@ public class UtilizadorBLL
         return listaUtilizador;
     }
 
-    public static String efetuarLogin(String username, String password) {
+    public static Utilizador efetuarLogin(String username, String password) {
         List<Utilizador> utilizadores = new ArrayList<>();
         utilizadores = readAll();
 
         for (Utilizador u : utilizadores) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
-                return u.getTipo();
+                return u;
             }
         }
 
-        return "";
+        return null;
     }
+
 
 }

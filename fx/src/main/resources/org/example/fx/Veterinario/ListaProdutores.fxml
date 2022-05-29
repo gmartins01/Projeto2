@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.fx.ListaProdutoresController">
+   <children>
+      <Pane layoutX="-3.0" prefHeight="166.0" prefWidth="1106.0">
+         <children>
+            <Text layoutX="478.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Produtores" />
+         </children>
+      </Pane>
+      <Button fx:id="voltar" layoutX="51.0" layoutY="576.0" mnemonicParsing="false" onAction="#switchToMenuVeterinario" text="Voltar" />
+      <TableView fx:id="tabelaProdutores" layoutX="363.0" layoutY="225.0" prefHeight="200.0" prefWidth="431.0">
+        <columns>
+          <TableColumn fx:id="colunaNome" prefWidth="430.40001220703124" text="Nome" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

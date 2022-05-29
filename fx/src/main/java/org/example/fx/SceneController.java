@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import proj2.bd.BLL.UtilizadorBLL;
+import proj2.bd.entity.Utilizador;
 
 import java.io.IOException;
 
@@ -24,40 +26,53 @@ public class SceneController {
     @FXML
     private PasswordField CampoPassword;
 
+    @FXML
+    private Label labelLogin;
+
     public void login(ActionEvent event) throws IOException {
 
         String username = CampoUsername.getText();
         String password = CampoPassword.getText();
 
-        String tipoUser = UtilizadorBLL.efetuarLogin(username, password);
+        String tipoUser = "";
+        Utilizador user = UtilizadorBLL.efetuarLogin(username, password);
+
+        tipoUser = user.getTipo();
 
         if (tipoUser.equals("Administrador")){
-            Parent root = FXMLLoader.load(getClass().getResource("MenuAdmin.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("Admin/MenuAdmin.fxml"));
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            stage.setTitle("Menu de Administrador");
             stage.setScene(scene);
             stage.show();
         }
 
+        if(tipoUser.equals("Veterinario")){
+            Parent root = FXMLLoader.load(getClass().getResource("Veterinario/MenuVeterinario.fxml"));
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setTitle("Menu de Veterinário");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        if(tipoUser.equals("Entidade Certificadora")){
+            Parent root = FXMLLoader.load(getClass().getResource("EntidadeCertificadora/MenuEntCertificadora.fxml"));
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setTitle("Menu de Entidade Certificadora");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        else {
+            labelLogin.setText("Dados Inválidos!");
+        }
 
     }
 
-    public void switchToMenuAdmin(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("MenuAdmin.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    public void switchToScene2(ActionEvent event)throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setTitle("LOGIN");
-        stage.setScene(scene);
-        stage.show();
-    }
 
 
 }

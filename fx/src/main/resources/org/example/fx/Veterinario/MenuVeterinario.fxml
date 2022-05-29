@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.fx.VeterinarioController">
+   <children>
+      <Pane prefHeight="166.0" prefWidth="1106.0">
+         <children>
+            <Text layoutX="484.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu de Veterinário" />
+         </children>
+      </Pane>
+      <Pane layoutY="166.0" prefHeight="485.0" prefWidth="1100.0">
+         <children>
+            <Button fx:id="listaProdutor" layoutX="477.0" layoutY="142.0" mnemonicParsing="false" onAction="#switchToListaProdutores" prefHeight="121.0" prefWidth="132.0" text="Lista de Produtores" />
+            <Button fx:id="logout" layoutX="70.0" layoutY="406.0" mnemonicParsing="false" onAction="#Logout" text="Terminar Sessão" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

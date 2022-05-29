@@ -5,21 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 
+public class VeterinarioController {
 
-public class AdminController{
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-
-    public void switchToPedidoRegisto(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Admin/PedidosRegisto.fxml"));
+    public void switchToListaProdutores(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Veterinario/ListaProdutores.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Pedidos de Registo");
@@ -35,6 +32,5 @@ public class AdminController{
         stage.setScene(scene);
         stage.show();
     }
-
 
 }
