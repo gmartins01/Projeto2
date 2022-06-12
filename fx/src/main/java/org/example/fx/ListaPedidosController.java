@@ -30,15 +30,30 @@ public class ListaPedidosController {
     private TableColumn<Utilizador,String> colunaNome;
 
     @FXML
+    private TableColumn<Utilizador,String> colunaTelefone;
+
+    @FXML
+    private TableColumn<Utilizador,String> colunaEmail;
+
+    @FXML
+    private TableColumn<Utilizador,String> colunaNIF;
+
+    @FXML
+    private TableColumn<Utilizador,String> colunaCidade;
+
+    @FXML
     private TableColumn<Utilizador,String> colunaFuncao;
 
     public ObservableList<Utilizador> getUsers(){
-        ObservableList<Utilizador> user= FXCollections.observableArrayList();;
+        ObservableList<Utilizador> user= FXCollections.observableArrayList();
         for(Utilizador u: UtilizadorBLL.readAll()){
-            user.add(u);
+            if(u.getVerificado().equals("NAO")){
+                user.add(u);
+            }
         }
         return  user;
     }
+
 
     public void switchToMenuAdmin(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Admin/MenuAdmin.fxml"));

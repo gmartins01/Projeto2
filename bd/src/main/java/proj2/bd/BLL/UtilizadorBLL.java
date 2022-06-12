@@ -58,5 +58,4 @@ public class UtilizadorBLL
         return null;
     }
 
-
 }

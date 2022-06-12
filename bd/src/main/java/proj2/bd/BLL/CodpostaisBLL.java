@@ -27,6 +27,46 @@ public class CodpostaisBLL
         em.getTransaction().commit();
     }
 
+    public static Codpostais readById(String codPostal){
+        Codpostais cod = null;
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        if (em == null) em = factory.createEntityManager();
+
+        Query q1 = em.createNamedQuery("Codpostais.findAllByCodigo");
+        q1.setParameter("codpostal", codPostal);
+        Object obj = q1.getSingleResult();
+
+        if(obj != null){
+            cod = ((Codpostais)obj);
+        }
+        else
+            return null;
+
+        return cod;
+    }
+
+    public static int serachCodigo(String codPostal){
+        Codpostais cod = null;
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        if (em == null) em = factory.createEntityManager();
+
+        Query q1 = em.createNamedQuery("Codpostais.findAllByCodigo");
+        q1.setParameter("codpostal", codPostal);
+        Object obj = q1.getSingleResult();
+
+        if(obj != null){
+            cod = ((Codpostais)obj);
+            return 0;
+        }
+        else
+            return -1;
+
+    }
+
     public static List<Codpostais> readAll(){
         List<Codpostais> listaCodPostais = new ArrayList<>();
         if(factory == null)
@@ -39,7 +79,6 @@ public class CodpostaisBLL
 
         for(Object cod : result){
             listaCodPostais.add((Codpostais) cod);
-            System.out.println(cod);
         }
 
         return listaCodPostais;

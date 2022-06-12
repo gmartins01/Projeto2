@@ -97,6 +97,6 @@ public class Codpostais {
 
     @Override
     public String toString() {
-        return "javaapplication119.DAL.Codpostais[ CodPostal =" + codpostal + " Cidade=" + cidade + "]";
+        return "javaapplication119.DAL.Codpostais[ CodPostal = " + codpostal + " Cidade = " + cidade + "]";
     }
 }

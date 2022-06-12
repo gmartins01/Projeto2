@@ -72,7 +72,14 @@ public class SceneController {
 
     }
 
-
+    public void registo(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Registo.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Efetuar pedido de registo");
+        stage.setScene(scene);
+        stage.show();
+    }
 
 
 }

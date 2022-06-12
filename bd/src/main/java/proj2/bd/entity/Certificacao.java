@@ -1,12 +1,16 @@
 package proj2.bd.entity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
 
 @Entity
 @IdClass(CertificacaoPK.class)
+@XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "Certificacao.findAll", query = "SELECT c FROM Certificacao c")})
 public class Certificacao {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "IDENTIDADECERTIFICADORA", insertable = false, updatable = false)
     private short identidadecertificadora;

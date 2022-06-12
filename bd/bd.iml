@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="default" value="6e0fc41b-5f92-40b8-8fb2-d7c5ed810079" />
+          <factory-entry name="default" value="89f3501d-d62c-490a-8eb3-bfb1b6e31a3e" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -51,5 +51,6 @@
     <orderEntry type="library" name="Maven: com.oracle.database.nls:orai18n:19.8.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.database.xml:xdb:19.8.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.database.xml:xmlparserv2:19.8.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:23.0.0" level="project" />
   </component>
 </module>

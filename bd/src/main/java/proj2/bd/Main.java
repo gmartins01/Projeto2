@@ -48,7 +48,7 @@ public class Main {
 
         ClienteBLL.create(cli);*/
 
-        ClienteBLL.readAll();
+        System.out.println(CodpostaisBLL.readAll());
 
     }
 

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4279c9ca-ddf1-4c33-adb2-f6c47a289191" name="Changes" comment="Login de Administradores">
+      <change afterPath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/ListaPedidosController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/ListaProdutoresController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/VeterinarioController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Veterinario/ListaProdutores.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Veterinario/MenuVeterinario.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bd/src/main/java/proj2/bd/BLL/UtilizadorBLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/bd/src/main/java/proj2/bd/BLL/UtilizadorBLL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/SceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fx/src/main/java/org/example/fx/SceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/MenuAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Admin/MenuAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/hello-view.fxml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/fx/src/main/java/org/example/fx/ListaProdutoresController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Veterinario/MenuVeterinario.fxml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/java/org/example/fx/ListaPedidosController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/java/org/example/fx/AdminController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/java/org/example/fx/VeterinarioController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Veterinario/ListaProdutores.fxml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Login.fxml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/bd/src/main/java/proj2/bd/entity/Veterinario.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Admin/PedidosRegisto.fxml" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="28vFZjCnlDXGnWqNWRHvFFBjYPK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="oracle" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="jdk.selected.JAVA_MODULE" value="17" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/fx/src/main/resources/org/example/fx/Veterinario" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.26666668" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gonca\OneDrive - Instituto Politécnico de Viana do Castelo\2º Ano\Projeto II\Projeto2\fx\src\main\resources\org\example\fx\Veterinario" />
+      <recent name="C:\Users\gabri\IdeaProjects\proj2" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\gonca\OneDrive - Instituto Politécnico de Viana do Castelo\2º Ano\Projeto II\Projeto2\fx\src\main\resources\org\example\fx\Admin" />
+      <recent name="C:\Users\gabri\IdeaProjects\proj2\bd" />
+      <recent name="C:\Users\gabri\IdeaProjects\bd" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="org.example.fx" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example.fx" />
+      <recent name="org.example.fx.Veterinario" />
+      <recent name="org.example.fx.Admin" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.HelloApplication">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.fx.HelloApplication" />
+      <module name="fx" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.fx.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.bd.Main" />
+      <module name="bd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.bd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4279c9ca-ddf1-4c33-adb2-f6c47a289191" name="Changes" comment="" />
+      <created>1652089246503</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1652089246503</updated>
+      <workItem from="1652089247722" duration="421000" />
+      <workItem from="1652089701399" duration="827000" />
+      <workItem from="1652109177063" duration="416000" />
+      <workItem from="1652191147123" duration="1594000" />
+      <workItem from="1652779951711" duration="1682000" />
+      <workItem from="1652782083220" duration="26000" />
+      <workItem from="1652794615599" duration="1565000" />
+      <workItem from="1652870997695" duration="884000" />
+      <workItem from="1652883720656" duration="370000" />
+      <workItem from="1652884127868" duration="291000" />
+      <workItem from="1652884458071" duration="4744000" />
+      <workItem from="1652905613242" duration="1266000" />
+      <workItem from="1652975457826" duration="1267000" />
+      <workItem from="1652985386744" duration="3597000" />
+      <workItem from="1653060533178" duration="174000" />
+      <workItem from="1653140327865" duration="6280000" />
+      <workItem from="1653171348394" duration="337000" />
+      <workItem from="1653234862187" duration="2482000" />
+      <workItem from="1653299280146" duration="1272000" />
+    </task>
+    <task id="LOCAL-00001" summary="Upload de ficheiros">
+      <created>1652884622985</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652884622985</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Login de Administradores">
+      <created>1652889197339</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652889197339</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Upload de ficheiros" />
+    <MESSAGE value="Login de Administradores" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login de Administradores" />
+  </component>
+</project>

@@ -15,8 +15,8 @@ public class Utilizador {
     @Id
     @Basic(optional = false)
     @Column(name = "IDUTILIZADOR")
-    @SequenceGenerator(name="UTILIZADOR_SEQ", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "UTILIZADOR_SEQ")
+    @SequenceGenerator(name = "UTILIZADOR_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UTILIZADOR_SEQ")
     private short idutilizador;
     @Basic
     @Column(name = "USERNAME")
@@ -27,13 +27,16 @@ public class Utilizador {
     @Basic
     @Column(name = "TIPO")
     private String tipo;
+    @Basic
+    @Column(name = "VERIFICADO", nullable = false, length = 5)
+    private String verificado;
     @OneToMany(mappedBy = "utilizadorByIdutilizador")
     private Collection<Cliente> clientesByIdutilizador;
     @OneToMany(mappedBy = "utilizadorByIdutilizador")
     private Collection<Veterinario> veterinariosByIdutilizador;
-    @OneToMany(mappedBy = "utilizadorByIdutilizador") //Adicionei
+    @OneToMany(mappedBy = "utilizadorByIdutilizador") // Adicionei
     private Collection<Produtor> produtorsByIdutilizador;
-    @OneToMany(mappedBy = "utilizadorByIdutilizador") //Adicionei
+    @OneToMany(mappedBy = "utilizadorByIdutilizador") // Adicionei
     private Collection<Entidadecertificadora> entidadecertificadorasByIdutilizador;
 
     public short getIdutilizador() {
@@ -68,18 +71,33 @@ public class Utilizador {
         this.tipo = tipo;
     }
 
+    public String getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(String verificado) {
+        this.verificado = verificado;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Utilizador that = (Utilizador) o;
 
-        if (idutilizador != that.idutilizador) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (tipo != null ? !tipo.equals(that.tipo) : that.tipo != null) return false;
-
+        if (idutilizador != that.idutilizador)
+            return false;
+        if (username != null ? !username.equals(that.username) : that.username != null)
+            return false;
+        if (password != null ? !password.equals(that.password) : that.password != null)
+            return false;
+        if (tipo != null ? !tipo.equals(that.tipo) : that.tipo != null)
+            return false;
+        if (verificado != null ? !verificado.equals(that.verificado) : that.verificado != null)
+            return false;
         return true;
     }
 
@@ -89,6 +107,7 @@ public class Utilizador {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (tipo != null ? tipo.hashCode() : 0);
+        result = 31 * result + (verificado != null ? verificado.hashCode() : 0);
         return result;
     }
 
@@ -120,7 +139,8 @@ public class Utilizador {
         return entidadecertificadorasByIdutilizador;
     }
 
-    public void setEntidadecertificadorasByIdutilizador(Collection<Entidadecertificadora> entidadecertificadorasByIdutilizador) {
+    public void setEntidadecertificadorasByIdutilizador(
+            Collection<Entidadecertificadora> entidadecertificadorasByIdutilizador) {
         this.entidadecertificadorasByIdutilizador = entidadecertificadorasByIdutilizador;
     }
 }
