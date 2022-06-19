@@ -3,6 +3,7 @@ module org.example.fx {
     requires javafx.fxml;
     requires org.example.bd;
     requires java.persistence;
+    requires java.sql;
 
     exports org.example.fx;
 

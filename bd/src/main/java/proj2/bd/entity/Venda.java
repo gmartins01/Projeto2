@@ -1,43 +1,76 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.sql.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "VENDA")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Venda.findAll", query = "SELECT g FROM Venda g"),
-        @NamedQuery(name = "Venda.findAllById", query = "SELECT g FROM Venda g WHERE g.idvenda = :idvenda"),
-        @NamedQuery(name = "Venda.findByData", query = "SELECT g FROM Venda g WHERE g.data = :data"),
-        @NamedQuery(name = "Venda.findByIdCliente", query = "SELECT g FROM Venda g WHERE g.idcliente = :idcliente")})
-public class Venda {
+    @NamedQuery(name = "Venda.findAll", query = "SELECT v FROM Venda v"),
+    @NamedQuery(name = "Venda.findByIdVenda", query = "SELECT v FROM Venda v WHERE v.idVenda = :idVenda"),
+    @NamedQuery(name = "Venda.findByData", query = "SELECT v FROM Venda v WHERE v.data = :data"),
+    @NamedQuery(name = "Venda.findByValorTotal", query = "SELECT v FROM Venda v WHERE v.valorTotal = :valorTotal")})
+public class Venda implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDVENDA")
-    @SequenceGenerator(name="VENDA_SEQ", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "VENDA_SEQ")
-    private short idvenda;
-    @Basic
+    @Column(name = "ID_VENDA")
+    private BigDecimal idVenda;
+    @Basic(optional = false)
     @Column(name = "DATA")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date data;
-    @Basic
-    @Column(name = "VALORTOTAL")
-    private int valortotal;
-    @Basic
-    @Column(name = "IDCLIENTE",insertable = false,updatable = false)
-    private short idcliente;
-    @ManyToOne  //Adicionei
-    @JoinColumn(name = "IDCLIENTE", referencedColumnName = "IDCLIENTE", nullable = false)
-    private Cliente clientesByIdcliente;
+    @Column(name = "VALOR_TOTAL")
+    private Double valorTotal;
+    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
+    @ManyToOne(optional = false)
+    private Cliente idCliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVenda")
+    private Collection<LinhaVenda> linhaVendaCollection;
 
-    public short getIdvenda() {
-        return idvenda;
+    public Venda() {
     }
 
-    public void setIdvenda(short idvenda) {
-        this.idvenda = idvenda;
+    public Venda(BigDecimal idVenda) {
+        this.idVenda = idVenda;
+    }
+
+    public Venda(BigDecimal idVenda, Date data) {
+        this.idVenda = idVenda;
+        this.data = data;
+    }
+
+    public BigDecimal getIdVenda() {
+        return idVenda;
+    }
+
+    public void setIdVenda(BigDecimal idVenda) {
+        this.idVenda = idVenda;
     }
 
     public Date getData() {
@@ -48,51 +81,53 @@ public class Venda {
         this.data = data;
     }
 
-    public int getValortotal() {
-        return valortotal;
+    public Double getValorTotal() {
+        return valorTotal;
     }
 
-    public void setValortotal(int valortotal) {
-        this.valortotal = valortotal;
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
-    public short getIdcliente() {
-        return idcliente;
+    public Cliente getIdCliente() {
+        return idCliente;
     }
 
-    public void setIdcliente(short idcliente) {
-        this.idcliente = idcliente;
+    public void setIdCliente(Cliente idCliente) {
+        this.idCliente = idCliente;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Collection<LinhaVenda> getLinhaVendaCollection() {
+        return linhaVendaCollection;
+    }
 
-        Venda venda = (Venda) o;
-
-        if (idvenda != venda.idvenda) return false;
-        if (valortotal != venda.valortotal) return false;
-        if (idcliente != venda.idcliente) return false;
-        if (data != null ? !data.equals(venda.data) : venda.data != null) return false;
-
-        return true;
+    public void setLinhaVendaCollection(Collection<LinhaVenda> linhaVendaCollection) {
+        this.linhaVendaCollection = linhaVendaCollection;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idvenda;
-        result = 31 * result + (data != null ? data.hashCode() : 0);
-        result = 31 * result + valortotal;
-        result = 31 * result + (int) idcliente;
-        return result;
+        int hash = 0;
+        hash += (idVenda != null ? idVenda.hashCode() : 0);
+        return hash;
     }
 
-    public Cliente getClientesByIdcliente() {
-        return clientesByIdcliente;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Venda)) {
+            return false;
+        }
+        Venda other = (Venda) object;
+        if ((this.idVenda == null && other.idVenda != null) || (this.idVenda != null && !this.idVenda.equals(other.idVenda))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setClientesByIdcliente(Cliente clientesByIdcliente) {
-        this.clientesByIdcliente = clientesByIdcliente;
+    @Override
+    public String toString() {
+        return "teste.Venda[ idVenda=" + idVenda + " ]";
     }
+    
 }

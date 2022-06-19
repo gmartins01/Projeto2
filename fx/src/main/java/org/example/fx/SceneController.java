@@ -37,7 +37,21 @@ public class SceneController {
         String tipoUser = "";
         Utilizador user = UtilizadorBLL.efetuarLogin(username, password);
 
-        tipoUser = user.getTipo();
+
+
+        if(user!=null && (user.getVerificado() == 0 || user.getVerificado() == 1))
+            tipoUser = user.getTipo();
+        else
+            tipoUser = "NULL";
+
+        if(tipoUser.equals("NULL"))
+            labelLogin.setText("Dados Inválidos!");
+
+        else if(user.getVerificado()==0){
+            labelLogin.setText("Utilizador não está verificado");
+            return;
+        }
+
 
         if (tipoUser.equals("Administrador")){
             Parent root = FXMLLoader.load(getClass().getResource("Admin/MenuAdmin.fxml"));
@@ -58,6 +72,7 @@ public class SceneController {
         }
 
         if(tipoUser.equals("Entidade Certificadora")){
+            UtilizadorBLL.getuserLogado().add(user);
             Parent root = FXMLLoader.load(getClass().getResource("EntidadeCertificadora/MenuEntCertificadora.fxml"));
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -66,9 +81,6 @@ public class SceneController {
             stage.show();
         }
 
-        else {
-            labelLogin.setText("Dados Inválidos!");
-        }
 
     }
 

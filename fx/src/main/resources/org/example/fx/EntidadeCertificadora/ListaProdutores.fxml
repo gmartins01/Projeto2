@@ -11,7 +11,7 @@
    <children>
       <Pane layoutX="-3.0" prefHeight="166.0" prefWidth="1106.0">
          <children>
-            <Text layoutX="478.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Produtores" />
+            <Text layoutX="528.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Produtores" />
          </children>
       </Pane>
       <Button fx:id="voltar" layoutX="51.0" layoutY="576.0" mnemonicParsing="false" onAction="#switchToMenuEntidade" text="Voltar" />
@@ -20,5 +20,6 @@
           <TableColumn fx:id="colunaNome" prefWidth="430.40001220703124" text="Nome" />
         </columns>
       </TableView>
+      <Button layoutX="518.0" layoutY="534.0" mnemonicParsing="false" onAction="#InserirCertificacao" text="Verificar" />
    </children>
 </AnchorPane>

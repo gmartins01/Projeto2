@@ -1,122 +1,131 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import java.sql.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
-@IdClass(VacinacaoPK.class)
-public class Vacinacao {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "VACINACAO")
+@NamedQueries({
+    @NamedQuery(name = "Vacinacao.findAll", query = "SELECT v FROM Vacinacao v"),
+    @NamedQuery(name = "Vacinacao.findByIdVacinacao", query = "SELECT v FROM Vacinacao v WHERE v.idVacinacao = :idVacinacao"),
+    @NamedQuery(name = "Vacinacao.findByDataHora", query = "SELECT v FROM Vacinacao v WHERE v.dataHora = :dataHora")})
+public class Vacinacao implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @Column(name = "IDVACINA", insertable = false, updatable = false)
-    private short idvacina;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "IDVETERINARIO", insertable = false, updatable = false)
-    private short idveterinario;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "CODGALINHA", insertable = false, updatable = false)
-    private short codgalinha;
-    @Basic
-    @Column(name = "DATAHORA")
-    private Date datahora;
-    @ManyToOne
-    @JoinColumn(name = "IDVACINA", referencedColumnName = "IDVACINA", nullable = false, insertable = false, updatable = false)
-    private Vacina vacinasByIdvacina;
-    @ManyToOne
-    @JoinColumn(name = "IDVETERINARIO", referencedColumnName = "IDVETERINARIO", nullable = false, insertable = false, updatable = false)
-    private Veterinario veterinariosByIdveterinario;
-    @ManyToOne
-    @JoinColumn(name = "CODGALINHA", referencedColumnName = "CODGALINHA", nullable = false, insertable = false, updatable = false)
-    private Galinha galinhasByCodgalinha;
+    @Basic(optional = false)
+    @Column(name = "ID_VACINACAO")
+    private BigDecimal idVacinacao;
+    @Basic(optional = false)
+    @Column(name = "DATA_HORA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHora;
+    @JoinColumn(name = "COD_GALINHA", referencedColumnName = "COD_GALINHA")
+    @ManyToOne(optional = false)
+    private Galinha codGalinha;
+    @JoinColumn(name = "ID_VACINA", referencedColumnName = "ID_VACINA")
+    @ManyToOne(optional = false)
+    private Vacina idVacina;
+    @JoinColumn(name = "ID_VETERINARIO", referencedColumnName = "ID_VETERINARIO")
+    @ManyToOne(optional = false)
+    private Veterinario idVeterinario;
 
-
-    public short getIdvacina() {
-        return idvacina;
+    public Vacinacao() {
     }
 
-    public void setIdvacina(short idvacina) {
-        this.idvacina = idvacina;
+    public Vacinacao(BigDecimal idVacinacao) {
+        this.idVacinacao = idVacinacao;
     }
 
-    public short getIdveterinario() {
-        return idveterinario;
+    public Vacinacao(BigDecimal idVacinacao, Date dataHora) {
+        this.idVacinacao = idVacinacao;
+        this.dataHora = dataHora;
     }
 
-    public void setIdveterinario(short idveterinario) {
-        this.idveterinario = idveterinario;
+    public BigDecimal getIdVacinacao() {
+        return idVacinacao;
     }
 
-    public short getCodgalinha() {
-        return codgalinha;
+    public void setIdVacinacao(BigDecimal idVacinacao) {
+        this.idVacinacao = idVacinacao;
     }
 
-    public void setCodgalinha(short codgalinha) {
-        this.codgalinha = codgalinha;
+    public Date getDataHora() {
+        return dataHora;
     }
 
-    public Date getDatahora() {
-        return datahora;
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
     }
 
-    public void setDatahora(Date datahora) {
-        this.datahora = datahora;
+    public Galinha getCodGalinha() {
+        return codGalinha;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public void setCodGalinha(Galinha codGalinha) {
+        this.codGalinha = codGalinha;
+    }
 
-        Vacinacao vacinacao = (Vacinacao) o;
+    public Vacina getIdVacina() {
+        return idVacina;
+    }
 
-        if (idvacina != vacinacao.idvacina) return false;
-        if (idveterinario != vacinacao.idveterinario) return false;
-        if (codgalinha != vacinacao.codgalinha) return false;
-        if (datahora != null ? !datahora.equals(vacinacao.datahora) : vacinacao.datahora != null) return false;
+    public void setIdVacina(Vacina idVacina) {
+        this.idVacina = idVacina;
+    }
 
-        return true;
+    public Veterinario getIdVeterinario() {
+        return idVeterinario;
+    }
+
+    public void setIdVeterinario(Veterinario idVeterinario) {
+        this.idVeterinario = idVeterinario;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idvacina;
-        result = 31 * result + (int) idveterinario;
-        result = 31 * result + (int) codgalinha;
-        result = 31 * result + (datahora != null ? datahora.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (idVacinacao != null ? idVacinacao.hashCode() : 0);
+        return hash;
     }
 
-    public Veterinario getVeterinarioByIdveterinario() {
-        return veterinariosByIdveterinario;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Vacinacao)) {
+            return false;
+        }
+        Vacinacao other = (Vacinacao) object;
+        if ((this.idVacinacao == null && other.idVacinacao != null) || (this.idVacinacao != null && !this.idVacinacao.equals(other.idVacinacao))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setVeterinarioByIdveterinario(Veterinario veterinarioByIdveterinario) {
-        this.veterinariosByIdveterinario = veterinarioByIdveterinario;
+    @Override
+    public String toString() {
+        return "teste.Vacinacao[ idVacinacao=" + idVacinacao + " ]";
     }
-
-    public Vacina getVacinasByIdvacina() {
-        return vacinasByIdvacina;
-    }
-
-    public void setVacinasByIdvacina(Vacina vacinasByIdvacina) {
-        this.vacinasByIdvacina = vacinasByIdvacina;
-    }
-
-    public Veterinario getVeterinariosByIdveterinario() {
-        return veterinariosByIdveterinario;
-    }
-
-    public void setVeterinariosByIdveterinario(Veterinario veterinariosByIdveterinario) {
-        this.veterinariosByIdveterinario = veterinariosByIdveterinario;
-    }
-
-    public Galinha getGalinhasByCodgalinha() {
-        return galinhasByCodgalinha;
-    }
-
-    public void setGalinhasByCodgalinha(Galinha galinhasByCodgalinha) {
-        this.galinhasByCodgalinha = galinhasByCodgalinha;
-    }
+    
 }

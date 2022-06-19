@@ -1,64 +1,84 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
+import javax.persistence.*;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "PRODUTOR")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Produtor.findAll", query = "SELECT p FROM Produtor p"),
-        @NamedQuery(name = "Produtor.findById", query = "SELECT p FROM Produtor p WHERE p.idprodutor = :idprodutor"),
-        @NamedQuery(name = "Produtor.findByNome", query = "SELECT p FROM Produtor p WHERE p.nome = :nome"),
-        @NamedQuery(name = "Produtor.findByTelefone", query = "SELECT p FROM Produtor p WHERE p.telefone = :telefone"), })
-public class Produtor {
+    @NamedQuery(name = "Produtor.findAll", query = "SELECT p FROM Produtor p"),
+    @NamedQuery(name = "Produtor.findByIdProdutor", query = "SELECT p FROM Produtor p WHERE p.idProdutor = :idProdutor"),
+    @NamedQuery(name = "Produtor.findByNome", query = "SELECT p FROM Produtor p WHERE p.nome = :nome"),
+    @NamedQuery(name = "Produtor.findByRua", query = "SELECT p FROM Produtor p WHERE p.rua = :rua"),
+    @NamedQuery(name = "Produtor.findByNumPorta", query = "SELECT p FROM Produtor p WHERE p.numPorta = :numPorta"),
+    @NamedQuery(name = "Produtor.findByTelefone", query = "SELECT p FROM Produtor p WHERE p.telefone = :telefone"),
+    @NamedQuery(name = "Produtor.findByNif", query = "SELECT p FROM Produtor p WHERE p.nif = :nif"),
+    @NamedQuery(name = "Produtor.findByEmail", query = "SELECT p FROM Produtor p WHERE p.email = :email")})
+public class Produtor implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDPRODUTOR")
-    @SequenceGenerator(name = "PRODUTOR_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUTOR_SEQ")
-    private short idprodutor;
-    @Basic
+    @Column(name = "ID_PRODUTOR")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private BigDecimal idProdutor;
+    @Basic(optional = false)
     @Column(name = "NOME")
     private String nome;
-    @Basic
     @Column(name = "RUA")
     private String rua;
-    @Basic
-    @Column(name = "NPORTA")
-    private String nporta;
-    @Basic
+    @Column(name = "NUM_PORTA")
+    private String numPorta;
+    @Basic(optional = false)
     @Column(name = "TELEFONE")
     private String telefone;
-    @Basic
     @Column(name = "NIF")
-    private int nif;
-    @Basic
-    @Column(name = "CODPOSTAL", insertable = false, updatable = false)
-    private String codpostal;
-    @Basic
+    private Long nif;
     @Column(name = "EMAIL")
     private String email;
-    @Basic
-    @Column(name = "IDUTILIZADOR", insertable = false, updatable = false)
-    private short idutilizador;
+    @Column(name = "ID_UTILIZADOR",insertable = false, updatable = false)
+    private BigDecimal idUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProdutor")
+    private Collection<Produto> produtoCollection;
+    @JoinColumn(name = "COD_POSTAL", referencedColumnName = "COD_POSTAL")
+    @ManyToOne(optional = false)
+    private Codpostais codPostal;
+    @JoinColumn(name = "ID_UTILIZADOR", referencedColumnName = "ID_UTILIZADOR")
     @ManyToOne
-    @JoinColumn(name = "IDUTILIZADOR", referencedColumnName = "IDUTILIZADOR", nullable = false)
-    private Utilizador utilizadorByIdutilizador;
-    @ManyToOne
-    @JoinColumn(name = "CODPOSTAL", referencedColumnName = "CODPOSTAL", nullable = false)
-    private Codpostais codpostaisByCodpostal; // Adicionei
-    @OneToMany(mappedBy = "produtorByIdprodutor")
-    private Collection<Racao> racaosByIdprodutor;
+    private Utilizador idUtilizador;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProdutor")
+    private Collection<Certificacao> certificacaoCollection;
 
-    public short getIdprodutor() {
-        return idprodutor;
+    public Produtor() {
     }
 
-    public void setIdprodutor(short idprodutor) {
-        this.idprodutor = idprodutor;
+    public Produtor(BigDecimal idProdutor) {
+        this.idProdutor = idProdutor;
+    }
+
+    public Produtor(BigDecimal idProdutor, String nome, String telefone) {
+        this.idProdutor = idProdutor;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+
+    public BigDecimal getIdProdutor() {
+        return idProdutor;
+    }
+
+    public void setIdProdutor(BigDecimal idProdutor) {
+        this.idProdutor = idProdutor;
     }
 
     public String getNome() {
@@ -77,12 +97,12 @@ public class Produtor {
         this.rua = rua;
     }
 
-    public String getNporta() {
-        return nporta;
+    public String getNumPorta() {
+        return numPorta;
     }
 
-    public void setNporta(String nporta) {
-        this.nporta = nporta;
+    public void setNumPorta(String numPorta) {
+        this.numPorta = numPorta;
     }
 
     public String getTelefone() {
@@ -93,20 +113,12 @@ public class Produtor {
         this.telefone = telefone;
     }
 
-    public int getNif() {
+    public Long getNif() {
         return nif;
     }
 
-    public void setNif(int nif) {
+    public void setNif(Long nif) {
         this.nif = nif;
-    }
-
-    public String getCodpostal() {
-        return codpostal;
-    }
-
-    public void setCodpostal(String codpostal) {
-        this.codpostal = codpostal;
     }
 
     public String getEmail() {
@@ -117,80 +129,69 @@ public class Produtor {
         this.email = email;
     }
 
-    public short getIdutilizador() {
-        return idutilizador;
+    public BigDecimal getIdUser() {
+        return idUser;
     }
 
-    public void setIdutilizador(short idutilizador) {
-        this.idutilizador = idutilizador;
+    public void setIdUser(BigDecimal idUser) {
+        this.idUser = idUser;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+    public Collection<Produto> getProdutoCollection() {
+        return produtoCollection;
+    }
 
-        Produtor produtor = (Produtor) o;
+    public void setProdutoCollection(Collection<Produto> produtoCollection) {
+        this.produtoCollection = produtoCollection;
+    }
 
-        if (idprodutor != produtor.idprodutor)
-            return false;
-        if (nif != produtor.nif)
-            return false;
-        if (idutilizador != produtor.idutilizador)
-            return false;
-        if (nome != null ? !nome.equals(produtor.nome) : produtor.nome != null)
-            return false;
-        if (rua != null ? !rua.equals(produtor.rua) : produtor.rua != null)
-            return false;
-        if (nporta != null ? !nporta.equals(produtor.nporta) : produtor.nporta != null)
-            return false;
-        if (telefone != null ? !telefone.equals(produtor.telefone) : produtor.telefone != null)
-            return false;
-        if (codpostal != null ? !codpostal.equals(produtor.codpostal) : produtor.codpostal != null)
-            return false;
-        if (email != null ? !email.equals(produtor.email) : produtor.email != null)
-            return false;
+    public Codpostais getCodPostal() {
+        return codPostal;
+    }
 
-        return true;
+    public void setCodPostal(Codpostais codPostal) {
+        this.codPostal = codPostal;
+    }
+
+    public Utilizador getIdUtilizador() {
+        return idUtilizador;
+    }
+
+    public void setIdUtilizador(Utilizador idUtilizador) {
+        this.idUtilizador = idUtilizador;
+    }
+
+    public Collection<Certificacao> getCertificacaoCollection() {
+        return certificacaoCollection;
+    }
+
+    public void setCertificacaoCollection(Collection<Certificacao> certificacaoCollection) {
+        this.certificacaoCollection = certificacaoCollection;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idprodutor;
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (rua != null ? rua.hashCode() : 0);
-        result = 31 * result + (nporta != null ? nporta.hashCode() : 0);
-        result = 31 * result + (telefone != null ? telefone.hashCode() : 0);
-        result = 31 * result + nif;
-        result = 31 * result + (codpostal != null ? codpostal.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (int) idutilizador;
-        return result;
+        int hash = 0;
+        hash += (idProdutor != null ? idProdutor.hashCode() : 0);
+        return hash;
     }
 
-    public Utilizador getUtilizadorByIdutilizador() {
-        return utilizadorByIdutilizador;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Produtor)) {
+            return false;
+        }
+        Produtor other = (Produtor) object;
+        if ((this.idProdutor == null && other.idProdutor != null) || (this.idProdutor != null && !this.idProdutor.equals(other.idProdutor))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setUtilizadorByIdutilizador(Utilizador utilizadorByIdutilizador) {
-        this.utilizadorByIdutilizador = utilizadorByIdutilizador;
+    @Override
+    public String toString() {
+        return "teste.Produtor[ idProdutor=" + idProdutor + " ]";
     }
-
-    public Collection<Racao> getRacaosByIdprodutor() {
-        return racaosByIdprodutor;
-    }
-
-    public void setRacaosByIdprodutor(Collection<Racao> racaosByIdprodutor) {
-        this.racaosByIdprodutor = racaosByIdprodutor;
-    }
-
-    public Codpostais getCodpostaisByCodpostal() {
-        return codpostaisByCodpostal;
-    }
-
-    public void setCodpostaisByCodpostal(Codpostais codpostaisByCodpostal) {
-        this.codpostaisByCodpostal = codpostaisByCodpostal;
-    }
+    
 }

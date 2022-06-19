@@ -1,12 +1,15 @@
 package org.example.fx;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import proj2.bd.BLL.CodpostaisBLL;
 import proj2.bd.BLL.ProdutorBLL;
 import proj2.bd.BLL.UtilizadorBLL;
@@ -15,11 +18,15 @@ import proj2.bd.entity.Produtor;
 import proj2.bd.entity.Utilizador;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class RegistoController {
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @FXML
     private TextField campoNome;
 
@@ -56,6 +63,15 @@ public class RegistoController {
     @FXML
     private TextField campoPassword;
 
+    public void sair(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setTitle("Iniciar Sessão");
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void solicitarRegisto(ActionEvent event) throws IOException {
         String nome = campoNome.getText();
         String telefone = campoTelefone.getText();
@@ -76,51 +92,48 @@ public class RegistoController {
         user.setUsername(username);
         user.setPassword(password);
         user.setTipo(tipo);
-        user.setVerificado("NAO");
+        user.setVerificado((short) 0);
+
+        Codpostais codigo = new Codpostais();
+        codigo.setCodPostal(codPostal);
+        codigo.setLocalidade(localidade);
+
+        List<Codpostais> codigos = CodpostaisBLL.readAll();
+
+        for(Codpostais cod: codigos){
+            if (cod.getCodPostal().equals(codPostal)){
+                return;
+            }
+            else{
+                CodpostaisBLL.create(codigo);
+                return;
+            }
+
+        }
 
 
         if (tipo.equals("Produtor")){
             Produtor prod = new Produtor();
-            List<Codpostais> codigos = new ArrayList<>();
-            codigos = CodpostaisBLL.readAll();
 
-            int searchCodigo = CodpostaisBLL.serachCodigo(codPostal);
-
-            for (Codpostais cod: codigos){
-                if(searchCodigo==0){
-                //if (CodpostaisBLL.readById(codPostal).equals(codPostal)){
-                    Codpostais codigo = new Codpostais();
                     prod.setNome(nome);
                     prod.setTelefone(telefone);
                     prod.setEmail(email);
-                    prod.setNif(nif);
+                    prod.setNif((long) nif);
                     prod.setRua(rua);
-                    prod.setNporta(nPorta);
-                    prod.setCodpostal(codPostal);
-                    codigo.setCodpostal(codPostal);
-                    codigo.setCidade(localidade);
+                    prod.setNumPorta(nPorta);
+                    prod.setCodPostal(codigo);
                     UtilizadorBLL.create(user);
-                    CodpostaisBLL.create(cod);
-                    prod.setCodpostaisByCodpostal(cod);
-                    prod.setUtilizadorByIdutilizador(user);
+                    List<Utilizador> users = UtilizadorBLL.readAll();
+                    Utilizador aux = new Utilizador();
+                    for (Utilizador u: users){
+                        if (u.getUsername().equals(username)){
+                            aux = u;
+                            return;
+                        }
+                    }
+                    prod.setIdUtilizador(aux);
                     ProdutorBLL.create(prod);
-                    return;
-                }
-                else{
-                    prod.setNome(nome);
-                    prod.setTelefone(telefone);
-                    prod.setEmail(email);
-                    prod.setNif(nif);
-                    prod.setRua(rua);
-                    prod.setNporta(nPorta);
-                    prod.setCodpostal(codPostal);
-                    UtilizadorBLL.create(user);
-                    prod.setCodpostaisByCodpostal(cod);
-                    prod.setUtilizadorByIdutilizador(user);
-                    ProdutorBLL.create(prod);
-                    return;
-                }
-            }
+
         }
     }
 

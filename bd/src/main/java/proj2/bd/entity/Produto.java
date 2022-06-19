@@ -1,59 +1,82 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import java.util.Collection;
-
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "PRODUTO")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p"),
-        @NamedQuery(name = "Produto.findAllById", query = "SELECT p FROM Produto p WHERE p.idproduto = :idproduto") })
-public class Produto {
+    @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p"),
+    @NamedQuery(name = "Produto.findByIdProduto", query = "SELECT p FROM Produto p WHERE p.idProduto = :idProduto"),
+    @NamedQuery(name = "Produto.findByDescricao", query = "SELECT p FROM Produto p WHERE p.descricao = :descricao"),
+    @NamedQuery(name = "Produto.findByPrecoVenda", query = "SELECT p FROM Produto p WHERE p.precoVenda = :precoVenda"),
+    @NamedQuery(name = "Produto.findByQtdStock", query = "SELECT p FROM Produto p WHERE p.qtdStock = :qtdStock")})
+public class Produto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDPRODUTO")
-    @SequenceGenerator(name = "PRODUTO_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUTO_SEQ")
-    private short idproduto;
-    @Basic
+    @Column(name = "ID_PRODUTO")
+    private BigDecimal idProduto;
     @Column(name = "DESCRICAO")
     private String descricao;
-    @Basic
-    @Column(name = "PRECOATVENDA")
-    private short precoatvenda;
-    @Basic
-    @Column(name = "QTDSTOCK")
-    private byte qtdstock;
-    @Basic
-    @Column(name = "IDPRODUTOR", insertable = false, updatable = false)
-    private short idprodutor;
-    @Basic
-    @Column(name = "IDLOTEOVOS", insertable = false, updatable = false)
-    private Short idloteovos;
-    @Basic
-    @Column(name = "CODGALINHA", insertable = false, updatable = false)
-    private Short codgalinha;
-    @OneToMany(mappedBy = "produtosByIdproduto")
-    private Collection<Linhavenda> linhavendasByIdproduto;
+    @Basic(optional = false)
+    @Column(name = "PRECO_VENDA")
+    private double precoVenda;
+    @Basic(optional = false)
+    @Column(name = "QTD_STOCK")
+    private short qtdStock;
+    @JoinColumn(name = "COD_GALINHA", referencedColumnName = "COD_GALINHA")
     @ManyToOne
-    @JoinColumn(name = "IDPRODUTOR", referencedColumnName = "IDPRODUTOR", nullable = false)
-    private Produtor produtorByIdprodutor;
+    private Galinha codGalinha;
+    @JoinColumn(name = "ID_LOTE", referencedColumnName = "ID_LOTE")
     @ManyToOne
-    @JoinColumn(name = "IDLOTEOVOS", referencedColumnName = "IDLOTEOVOS")
-    private Loteovos loteovosByIdloteovos;
-    @ManyToOne
-    @JoinColumn(name = "CODGALINHA", referencedColumnName = "CODGALINHA")
-    private Galinha galinhaByCodgalinha;
+    private LoteOvos idLote;
+    @JoinColumn(name = "ID_PRODUTOR", referencedColumnName = "ID_PRODUTOR")
+    @ManyToOne(optional = false)
+    private Produtor idProdutor;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "produto")
+    private LinhaVenda linhaVenda;
 
-    public short getIdproduto() {
-        return idproduto;
+    public Produto() {
     }
 
-    public void setIdproduto(short idproduto) {
-        this.idproduto = idproduto;
+    public Produto(BigDecimal idProduto) {
+        this.idProduto = idProduto;
+    }
+
+    public Produto(BigDecimal idProduto, double precoVenda, short qtdStock) {
+        this.idProduto = idProduto;
+        this.precoVenda = precoVenda;
+        this.qtdStock = qtdStock;
+    }
+
+    public BigDecimal getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(BigDecimal idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getDescricao() {
@@ -64,115 +87,77 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public short getPrecoatvenda() {
-        return precoatvenda;
+    public double getPrecoVenda() {
+        return precoVenda;
     }
 
-    public void setPrecoatvenda(short precoatvenda) {
-        this.precoatvenda = precoatvenda;
+    public void setPrecoVenda(double precoVenda) {
+        this.precoVenda = precoVenda;
     }
 
-    public byte getQtdstock() {
-        return qtdstock;
+    public short getQtdStock() {
+        return qtdStock;
     }
 
-    public void setQtdstock(byte qtdstock) {
-        this.qtdstock = qtdstock;
+    public void setQtdStock(short qtdStock) {
+        this.qtdStock = qtdStock;
     }
 
-    public short getIdprodutor() {
-        return idprodutor;
+    public Galinha getCodGalinha() {
+        return codGalinha;
     }
 
-    public void setIdprodutor(short idprodutor) {
-        this.idprodutor = idprodutor;
+    public void setCodGalinha(Galinha codGalinha) {
+        this.codGalinha = codGalinha;
     }
 
-    public Short getIdloteovos() {
-        return idloteovos;
+    public LoteOvos getIdLote() {
+        return idLote;
     }
 
-    public void setIdloteovos(Short idloteovos) {
-        this.idloteovos = idloteovos;
+    public void setIdLote(LoteOvos idLote) {
+        this.idLote = idLote;
     }
 
-    public Short getCodgalinha() {
-        return codgalinha;
+    public Produtor getIdProdutor() {
+        return idProdutor;
     }
 
-    public void setCodgalinha(Short codgalinha) {
-        this.codgalinha = codgalinha;
+    public void setIdProdutor(Produtor idProdutor) {
+        this.idProdutor = idProdutor;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+    public LinhaVenda getLinhaVenda() {
+        return linhaVenda;
+    }
 
-        Produto produto = (Produto) o;
-
-        if (idproduto != produto.idproduto)
-            return false;
-        if (precoatvenda != produto.precoatvenda)
-            return false;
-        if (qtdstock != produto.qtdstock)
-            return false;
-        if (idprodutor != produto.idprodutor)
-            return false;
-        if (descricao != null ? !descricao.equals(produto.descricao) : produto.descricao != null)
-            return false;
-        if (idloteovos != null ? !idloteovos.equals(produto.idloteovos) : produto.idloteovos != null)
-            return false;
-        if (codgalinha != null ? !codgalinha.equals(produto.codgalinha) : produto.codgalinha != null)
-            return false;
-
-        return true;
+    public void setLinhaVenda(LinhaVenda linhaVenda) {
+        this.linhaVenda = linhaVenda;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idproduto;
-        result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
-        result = 31 * result + (int) precoatvenda;
-        result = 31 * result + (int) qtdstock;
-        result = 31 * result + (int) idprodutor;
-        result = 31 * result + (idloteovos != null ? idloteovos.hashCode() : 0);
-        result = 31 * result + (codgalinha != null ? codgalinha.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (idProduto != null ? idProduto.hashCode() : 0);
+        return hash;
     }
 
-    public Collection<Linhavenda> getLinhavendasByIdproduto() {
-        return linhavendasByIdproduto;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Produto)) {
+            return false;
+        }
+        Produto other = (Produto) object;
+        if ((this.idProduto == null && other.idProduto != null) || (this.idProduto != null && !this.idProduto.equals(other.idProduto))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setLinhavendasByIdproduto(Collection<Linhavenda> linhavendasByIdproduto) {
-        this.linhavendasByIdproduto = linhavendasByIdproduto;
+    @Override
+    public String toString() {
+        return "teste.Produto[ idProduto=" + idProduto + " ]";
     }
-
-    public Produtor getProdutorByIdprodutor() {
-        return produtorByIdprodutor;
-    }
-
-    public void setProdutorByIdprodutor(Produtor produtorByIdprodutor) {
-        this.produtorByIdprodutor = produtorByIdprodutor;
-    }
-
-    public Loteovos getLoteovosByIdloteovos() {
-        return loteovosByIdloteovos;
-    }
-
-    public void setLoteovosByIdloteovos(Loteovos loteovosByIdloteovos) {
-        this.loteovosByIdloteovos = loteovosByIdloteovos;
-    }
-
-    public Galinha getGalinhaByCodgalinha() {
-        return galinhaByCodgalinha;
-    }
-
-    public void setGalinhaByCodgalinha(Galinha galinhaByCodgalinha) {
-        this.galinhaByCodgalinha = galinhaByCodgalinha;
-    }
-
+    
 }

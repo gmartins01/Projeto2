@@ -1,66 +1,93 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.sql.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "VETERINARIO")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Veterinario.findAll", query = "SELECT g FROM Veterinario g"),
-        @NamedQuery(name = "Veterinario.findAllById", query = "SELECT g FROM Veterinario g WHERE g.idveterinario = :idveterinario"),
-        @NamedQuery(name = "Veterinario.findByNome", query = "SELECT g FROM Veterinario g WHERE g.nome = :nome") })
-public class Veterinario {
+    @NamedQuery(name = "Veterinario.findAll", query = "SELECT v FROM Veterinario v"),
+    @NamedQuery(name = "Veterinario.findByIdVeterinario", query = "SELECT v FROM Veterinario v WHERE v.idVeterinario = :idVeterinario"),
+    @NamedQuery(name = "Veterinario.findByNome", query = "SELECT v FROM Veterinario v WHERE v.nome = :nome"),
+    @NamedQuery(name = "Veterinario.findByNumPorta", query = "SELECT v FROM Veterinario v WHERE v.numPorta = :numPorta"),
+    @NamedQuery(name = "Veterinario.findByRua", query = "SELECT v FROM Veterinario v WHERE v.rua = :rua"),
+    @NamedQuery(name = "Veterinario.findByNif", query = "SELECT v FROM Veterinario v WHERE v.nif = :nif"),
+    @NamedQuery(name = "Veterinario.findByTelefone", query = "SELECT v FROM Veterinario v WHERE v.telefone = :telefone"),
+    @NamedQuery(name = "Veterinario.findByEmail", query = "SELECT v FROM Veterinario v WHERE v.email = :email")})
+public class Veterinario implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDVETERINARIO")
-    @SequenceGenerator(name="VETERINARIO_SEQ", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "VETERINARIO_SEQ")
-    private short idveterinario;
-    @Basic
+    @Column(name = "ID_VETERINARIO")
+    private BigDecimal idVeterinario;
+    @Basic(optional = false)
     @Column(name = "NOME")
     private String nome;
-    @Basic
+    @Column(name = "NUM_PORTA")
+    private String numPorta;
     @Column(name = "RUA")
     private String rua;
-    @Basic
-    @Column(name = "NPORTA")
-    private String nporta;
-    @Basic
-    @Column(name = "CODPOSTAL", insertable = false, updatable = false)
-    private String codpostal;
-    @Basic
-    @Column(name = "DTNASCIMENTO")
-    private Date dtnascimento;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "NIF")
-    private int nif;
-    @Basic
+    private long nif;
+    @Basic(optional = false)
     @Column(name = "TELEFONE")
     private String telefone;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "EMAIL")
     private String email;
-    @Basic
-    @Column(name = "IDUTILIZADOR", insertable = false, updatable = false)
-    private short idutilizador;
-    @ManyToOne
-    @JoinColumn(name = "CODPOSTAL", referencedColumnName = "CODPOSTAL", nullable = false)
-    private Codpostais codpostaisByCodpostal; //Adicionei
-    @ManyToOne //Adicionei
-    @JoinColumn(name = "IDUTILIZADOR", referencedColumnName = "IDUTILIZADOR", nullable = false)
-    private Utilizador utilizadorByIdutilizador;
-    @OneToMany(mappedBy = "veterinariosByIdveterinario") //Adicionei
-    private Collection<Vacinacao> vacinacaoByIdveterinario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVeterinario")
+    private Collection<Vacinacao> vacinacaoCollection;
+    @JoinColumn(name = "COD_POSTAL", referencedColumnName = "COD_POSTAL")
+    @ManyToOne(optional = false)
+    private Codpostais codPostal;
+    @JoinColumn(name = "ID_UTILIZADOR", referencedColumnName = "ID_UTILIZADOR")
+    @ManyToOne(optional = false)
+    private Utilizador idUtilizador;
 
-    public short getIdveterinario() {
-        return idveterinario;
+    public Veterinario() {
     }
 
-    public void setIdveterinario(short idveterinario) {
-        this.idveterinario = idveterinario;
+    public Veterinario(BigDecimal idVeterinario) {
+        this.idVeterinario = idVeterinario;
+    }
+
+    public Veterinario(BigDecimal idVeterinario, String nome, long nif, String telefone, String email) {
+        this.idVeterinario = idVeterinario;
+        this.nome = nome;
+        this.nif = nif;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    public BigDecimal getIdVeterinario() {
+        return idVeterinario;
+    }
+
+    public void setIdVeterinario(BigDecimal idVeterinario) {
+        this.idVeterinario = idVeterinario;
     }
 
     public String getNome() {
@@ -71,6 +98,14 @@ public class Veterinario {
         this.nome = nome;
     }
 
+    public String getNumPorta() {
+        return numPorta;
+    }
+
+    public void setNumPorta(String numPorta) {
+        this.numPorta = numPorta;
+    }
+
     public String getRua() {
         return rua;
     }
@@ -79,35 +114,11 @@ public class Veterinario {
         this.rua = rua;
     }
 
-    public String getNporta() {
-        return nporta;
-    }
-
-    public void setNporta(String nporta) {
-        this.nporta = nporta;
-    }
-
-    public String getCodpostal() {
-        return codpostal;
-    }
-
-    public void setCodpostal(String codpostal) {
-        this.codpostal = codpostal;
-    }
-
-    public Date getDtnascimento() {
-        return dtnascimento;
-    }
-
-    public void setDtnascimento(Date dtnascimento) {
-        this.dtnascimento = dtnascimento;
-    }
-
-    public int getNif() {
+    public long getNif() {
         return nif;
     }
 
-    public void setNif(int nif) {
+    public void setNif(long nif) {
         this.nif = nif;
     }
 
@@ -127,71 +138,53 @@ public class Veterinario {
         this.email = email;
     }
 
-    public short getIdutilizador() {
-        return idutilizador;
+    public Collection<Vacinacao> getVacinacaoCollection() {
+        return vacinacaoCollection;
     }
 
-    public void setIdutilizador(short idutilizador) {
-        this.idutilizador = idutilizador;
+    public void setVacinacaoCollection(Collection<Vacinacao> vacinacaoCollection) {
+        this.vacinacaoCollection = vacinacaoCollection;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Codpostais getCodPostal() {
+        return codPostal;
+    }
 
-        Veterinario that = (Veterinario) o;
+    public void setCodPostal(Codpostais codPostal) {
+        this.codPostal = codPostal;
+    }
 
-        if (idveterinario != that.idveterinario) return false;
-        if (nif != that.nif) return false;
-        if (idutilizador != that.idutilizador) return false;
-        if (nome != null ? !nome.equals(that.nome) : that.nome != null) return false;
-        if (rua != null ? !rua.equals(that.rua) : that.rua != null) return false;
-        if (nporta != null ? !nporta.equals(that.nporta) : that.nporta != null) return false;
-        if (codpostal != null ? !codpostal.equals(that.codpostal) : that.codpostal != null) return false;
-        if (dtnascimento != null ? !dtnascimento.equals(that.dtnascimento) : that.dtnascimento != null) return false;
-        if (telefone != null ? !telefone.equals(that.telefone) : that.telefone != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+    public Utilizador getIdUtilizador() {
+        return idUtilizador;
+    }
 
-        return true;
+    public void setIdUtilizador(Utilizador idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idveterinario;
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (rua != null ? rua.hashCode() : 0);
-        result = 31 * result + (nporta != null ? nporta.hashCode() : 0);
-        result = 31 * result + (codpostal != null ? codpostal.hashCode() : 0);
-        result = 31 * result + (dtnascimento != null ? dtnascimento.hashCode() : 0);
-        result = 31 * result + nif;
-        result = 31 * result + (telefone != null ? telefone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (int) idutilizador;
-        return result;
+        int hash = 0;
+        hash += (idVeterinario != null ? idVeterinario.hashCode() : 0);
+        return hash;
     }
 
-    public Codpostais getCodpostaisByCodpostal() {
-        return codpostaisByCodpostal;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Veterinario)) {
+            return false;
+        }
+        Veterinario other = (Veterinario) object;
+        if ((this.idVeterinario == null && other.idVeterinario != null) || (this.idVeterinario != null && !this.idVeterinario.equals(other.idVeterinario))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setCodpostaisByCodpostal(Codpostais codpostaisByCodpostal) {
-        this.codpostaisByCodpostal = codpostaisByCodpostal;
+    @Override
+    public String toString() {
+        return "teste.Veterinario[ idVeterinario=" + idVeterinario + " ]";
     }
-
-    public Utilizador getUtilizadorByIdutilizador() {
-        return utilizadorByIdutilizador;
-    }
-
-    public void setUtilizadorByIdutilizador(Utilizador utilizadorByIdutilizador) {
-        this.utilizadorByIdutilizador = utilizadorByIdutilizador;
-    }
-
-    public Collection<Vacinacao> getVacinacaoByIdveterinario() {
-        return vacinacaoByIdveterinario;
-    }
-
-    public void setVacinacaoByIdveterinario(Collection<Vacinacao> vacinacaoByIdveterinario) {
-        this.vacinacaoByIdveterinario = vacinacaoByIdveterinario;
-    }
+    
 }

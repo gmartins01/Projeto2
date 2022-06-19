@@ -1,10 +1,10 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.Vacinacao;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Vacinacao;
 
 public class VacinacaoBLL
 {

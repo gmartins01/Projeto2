@@ -1,10 +1,11 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.Produtor;
+import proj2.bd.entity.Utilizador;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Produtor;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -34,8 +35,8 @@ public class ProdutorBLL
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Produtor.findById");
-        q1.setParameter("idprodutor", idProdutor);
+        Query q1 = em.createNamedQuery("Produtor.findByIdProdutor");
+        q1.setParameter("idProdutor", idProdutor);
         Object obj = q1.getSingleResult();
 
         if(obj != null){
@@ -59,10 +60,20 @@ public class ProdutorBLL
 
         for(Object produtor : result){
             listaProdutor.add((Produtor) produtor);
-            System.out.println(produtor);
         }
 
         return listaProdutor;
+    }
+
+    public static void delete(Produtor produtor){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        if (em == null) em = factory.createEntityManager();
+
+        em.getTransaction().begin();
+        em.remove(produtor);
+        em.getTransaction().commit();
     }
 
 }

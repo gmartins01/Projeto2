@@ -1,10 +1,10 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.Codpostais;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Codpostais;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -34,8 +34,8 @@ public class CodpostaisBLL
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Codpostais.findAllByCodigo");
-        q1.setParameter("codpostal", codPostal);
+        Query q1 = em.createNamedQuery("Codpostais.findByCodPostal");
+        q1.setParameter("codPostal", codPostal);
         Object obj = q1.getSingleResult();
 
         if(obj != null){
@@ -54,8 +54,8 @@ public class CodpostaisBLL
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Codpostais.findAllByCodigo");
-        q1.setParameter("codpostal", codPostal);
+        Query q1 = em.createNamedQuery("Codpostais.findByCodPostal");
+        q1.setParameter("codPostal", codPostal);
         Object obj = q1.getSingleResult();
 
         if(obj != null){

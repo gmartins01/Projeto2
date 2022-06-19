@@ -1,10 +1,10 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.Utilizador;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Utilizador;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -15,6 +15,12 @@ public class UtilizadorBLL
     private static final String PERSISTENCE_UNIT_NAME = "default";
     private static EntityManagerFactory factory = null;
     private static EntityManager em = null;
+
+    private static List<Utilizador> userLogado = new ArrayList<>();
+
+    public static List<Utilizador> getuserLogado() {
+        return userLogado;
+    }
 
     public static void create(Utilizador user){
         if(factory == null)
@@ -56,6 +62,17 @@ public class UtilizadorBLL
         }
 
         return null;
+    }
+
+    public static void delete(Utilizador user){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        if (em == null) em = factory.createEntityManager();
+
+        em.getTransaction().begin();
+        em.remove(user);
+        em.getTransaction().commit();
     }
 
 }

@@ -1,35 +1,64 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "VACINA")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Vacina.findAll", query = "SELECT g FROM Vacina g"),
-        @NamedQuery(name = "Vacina.findById", query = "SELECT g FROM Vacina g WHERE g.idvacina = :idvacina"),
-        @NamedQuery(name = "Vacina.findByNome", query = "SELECT g FROM Vacina g WHERE g.nome = :nome") })
-public class Vacina {
+    @NamedQuery(name = "Vacina.findAll", query = "SELECT v FROM Vacina v"),
+    @NamedQuery(name = "Vacina.findByIdVacina", query = "SELECT v FROM Vacina v WHERE v.idVacina = :idVacina"),
+    @NamedQuery(name = "Vacina.findByNome", query = "SELECT v FROM Vacina v WHERE v.nome = :nome")})
+public class Vacina implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDVACINA")
-    @SequenceGenerator(name="VACINA_SEQ", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "VACINA_SEQ")
-    private short idvacina;
-    @Basic
+    @Column(name = "ID_VACINA")
+    private BigDecimal idVacina;
+    @Basic(optional = false)
     @Column(name = "NOME")
     private String nome;
-    @OneToMany(mappedBy = "vacinasByIdvacina")
-    private Collection<Vacinacao> vacinacaosByIdvacina;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVacina")
+    private Collection<Vacinacao> vacinacaoCollection;
 
-    public short getIdvacina() {
-        return idvacina;
+    public Vacina() {
     }
 
-    public void setIdvacina(short idvacina) {
-        this.idvacina = idvacina;
+    public Vacina(BigDecimal idVacina) {
+        this.idVacina = idVacina;
+    }
+
+    public Vacina(BigDecimal idVacina, String nome) {
+        this.idVacina = idVacina;
+        this.nome = nome;
+    }
+
+    public BigDecimal getIdVacina() {
+        return idVacina;
+    }
+
+    public void setIdVacina(BigDecimal idVacina) {
+        this.idVacina = idVacina;
     }
 
     public String getNome() {
@@ -40,33 +69,37 @@ public class Vacina {
         this.nome = nome;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Collection<Vacinacao> getVacinacaoCollection() {
+        return vacinacaoCollection;
+    }
 
-        Vacina vacina = (Vacina) o;
-
-        if (idvacina != vacina.idvacina) return false;
-        if (nome != null ? !nome.equals(vacina.nome) : vacina.nome != null) return false;
-
-        return true;
+    public void setVacinacaoCollection(Collection<Vacinacao> vacinacaoCollection) {
+        this.vacinacaoCollection = vacinacaoCollection;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idvacina;
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (idVacina != null ? idVacina.hashCode() : 0);
+        return hash;
     }
 
-    public Collection<Vacinacao> getVacinacaosByIdvacina() {
-        return vacinacaosByIdvacina;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Vacina)) {
+            return false;
+        }
+        Vacina other = (Vacina) object;
+        if ((this.idVacina == null && other.idVacina != null) || (this.idVacina != null && !this.idVacina.equals(other.idVacina))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setVacinacaosByIdvacina(Collection<Vacinacao> vacinacaosByIdvacina) {
-        this.vacinacaosByIdvacina = vacinacaosByIdvacina;
+    @Override
+    public String toString() {
+        return "teste.Vacina[ idVacina=" + idVacina + " ]";
     }
-
-
+    
 }

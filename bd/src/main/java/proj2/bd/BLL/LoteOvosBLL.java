@@ -1,22 +1,22 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.LoteOvos;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Loteovos;
 
 import javax.persistence.Query;
 import java.util.List;
 import java.util.ArrayList;
 
-public class LoteovosBLL
+public class LoteOvosBLL
 {
     private static final String PERSISTENCE_UNIT_NAME = "default";
     private static EntityManagerFactory factory = null;
     private static EntityManager em = null;
 
-    public static void create(Loteovos ovos){
+    public static void create(LoteOvos ovos){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
@@ -27,19 +27,19 @@ public class LoteovosBLL
         em.getTransaction().commit();
     }
 
-    public static Loteovos read(int idLote){
-        Loteovos lote = null;
+    public static LoteOvos read(int idLote){
+        LoteOvos lote = null;
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Loteovos.findAllById");
-        q1.setParameter("idloteovos", idLote);
+        Query q1 = em.createNamedQuery("LoteOvos.findByIdLote");
+        q1.setParameter("idLote", idLote);
         Object obj = q1.getSingleResult();
 
         if(obj != null){
-            lote = ((Loteovos)obj);
+            lote = ((LoteOvos)obj);
         }
         else
             return null;
@@ -47,18 +47,18 @@ public class LoteovosBLL
         return lote;
     }
 
-    public static List<Loteovos> readAll(){
-        List<Loteovos> listaLoteOvos = new ArrayList<>();
+    public static List<LoteOvos> readAll(){
+        List<LoteOvos> listaLoteOvos = new ArrayList<>();
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Loteovos.findAll");
+        Query q1 = em.createNamedQuery("LoteOvos.findAll");
         List<Object> result = q1.getResultList();
 
         for(Object lote : result){
-            listaLoteOvos.add((Loteovos) lote);
+            listaLoteOvos.add((LoteOvos) lote);
             System.out.println(lote);
         }
 

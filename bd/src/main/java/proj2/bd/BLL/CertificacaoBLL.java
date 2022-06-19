@@ -1,7 +1,6 @@
 package proj2.bd.BLL;
 
 import proj2.bd.entity.Certificacao;
-import proj2.bd.entity.Cliente;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -1,10 +1,10 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.LinhaVenda;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Linhavenda;
 
 public class LinhavendaBLL
 {
@@ -12,7 +12,7 @@ public class LinhavendaBLL
     private static EntityManagerFactory factory = null;
     private static EntityManager em = null;
 
-    public static void create(Linhavenda linha){
+    public static void create(LinhaVenda linha){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 

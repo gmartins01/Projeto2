@@ -1,10 +1,11 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.Utilizador;
+import proj2.bd.entity.Veterinario;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Veterinario;
 
 
 import javax.persistence.Query;
@@ -35,7 +36,7 @@ public class VeterinarioBLL
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Produto.findAll");
+        Query q1 = em.createNamedQuery("Veterinario.findAll");
         List<Object> result = q1.getResultList();
 
         for(Object vet : result){
@@ -44,6 +45,17 @@ public class VeterinarioBLL
         }
 
         return listaVeterinario;
+    }
+
+    public static void delete(Veterinario vet){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        if (em == null) em = factory.createEntityManager();
+
+        em.getTransaction().begin();
+        em.remove(vet);
+        em.getTransaction().commit();
     }
 
 }

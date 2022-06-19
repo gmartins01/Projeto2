@@ -1,50 +1,78 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
+import javax.persistence.*;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "UTILIZADOR")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Utilizador.findAll", query = "SELECT g FROM Utilizador g"),
-        @NamedQuery(name = "Utilizador.findAllById", query = "SELECT g FROM Utilizador g WHERE g.idutilizador = :idutilizador"),
-        @NamedQuery(name = "Utilizador.findByTipo", query = "SELECT g FROM Utilizador g WHERE g.tipo = :tipo") })
-public class Utilizador {
+    @NamedQuery(name = "Utilizador.findAll", query = "SELECT u FROM Utilizador u"),
+    @NamedQuery(name = "Utilizador.findByIdUtilizador", query = "SELECT u FROM Utilizador u WHERE u.idUtilizador = :idUtilizador"),
+    @NamedQuery(name = "Utilizador.findByUsername", query = "SELECT u FROM Utilizador u WHERE u.username = :username"),
+    @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password"),
+    @NamedQuery(name = "Utilizador.findByTipo", query = "SELECT u FROM Utilizador u WHERE u.tipo = :tipo"),
+    @NamedQuery(name = "Utilizador.findByVerificado", query = "SELECT u FROM Utilizador u WHERE u.verificado = :verificado")})
+public class Utilizador implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "IDUTILIZADOR")
-    @SequenceGenerator(name = "UTILIZADOR_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UTILIZADOR_SEQ")
-    private short idutilizador;
-    @Basic
+    @Column(name = "ID_UTILIZADOR")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private BigDecimal idUtilizador;
+    @Basic(optional = false)
     @Column(name = "USERNAME")
     private String username;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "PASSWORD")
     private String password;
-    @Basic
+    @Basic(optional = false)
     @Column(name = "TIPO")
     private String tipo;
-    @Basic
-    @Column(name = "VERIFICADO", nullable = false, length = 5)
-    private String verificado;
-    @OneToMany(mappedBy = "utilizadorByIdutilizador")
-    private Collection<Cliente> clientesByIdutilizador;
-    @OneToMany(mappedBy = "utilizadorByIdutilizador")
-    private Collection<Veterinario> veterinariosByIdutilizador;
-    @OneToMany(mappedBy = "utilizadorByIdutilizador") // Adicionei
-    private Collection<Produtor> produtorsByIdutilizador;
-    @OneToMany(mappedBy = "utilizadorByIdutilizador") // Adicionei
-    private Collection<Entidadecertificadora> entidadecertificadorasByIdutilizador;
+    @Basic(optional = false)
+    @Column(name = "VERIFICADO")
+    private short verificado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
+    private Collection<EntidadeCertificadora> entidadeCertificadoraCollection;
+    @OneToMany(mappedBy = "idUtilizador")
+    private Collection<Produtor> produtorCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
+    private Collection<Cliente> clienteCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilizador")
+    private Collection<Veterinario> veterinarioCollection;
 
-    public short getIdutilizador() {
-        return idutilizador;
+    public Utilizador() {
     }
 
-    public void setIdutilizador(short idutilizador) {
-        this.idutilizador = idutilizador;
+    public Utilizador(BigDecimal idUtilizador) {
+        this.idUtilizador = idUtilizador;
+    }
+
+    public Utilizador(BigDecimal idUtilizador, String username, String password, String tipo, short verificado) {
+        this.idUtilizador = idUtilizador;
+        this.username = username;
+        this.password = password;
+        this.tipo = tipo;
+        this.verificado = verificado;
+    }
+
+    public BigDecimal getIdUtilizador() {
+        return idUtilizador;
+    }
+
+    public void setIdUtilizador(BigDecimal idUtilizador) {
+        this.idUtilizador = idUtilizador;
     }
 
     public String getUsername() {
@@ -71,76 +99,69 @@ public class Utilizador {
         this.tipo = tipo;
     }
 
-    public String getVerificado() {
+    public short getVerificado() {
         return verificado;
     }
 
-    public void setVerificado(String verificado) {
+    public void setVerificado(short verificado) {
         this.verificado = verificado;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+    public Collection<EntidadeCertificadora> getEntidadeCertificadoraCollection() {
+        return entidadeCertificadoraCollection;
+    }
 
-        Utilizador that = (Utilizador) o;
+    public void setEntidadeCertificadoraCollection(Collection<EntidadeCertificadora> entidadeCertificadoraCollection) {
+        this.entidadeCertificadoraCollection = entidadeCertificadoraCollection;
+    }
 
-        if (idutilizador != that.idutilizador)
-            return false;
-        if (username != null ? !username.equals(that.username) : that.username != null)
-            return false;
-        if (password != null ? !password.equals(that.password) : that.password != null)
-            return false;
-        if (tipo != null ? !tipo.equals(that.tipo) : that.tipo != null)
-            return false;
-        if (verificado != null ? !verificado.equals(that.verificado) : that.verificado != null)
-            return false;
-        return true;
+    public Collection<Produtor> getProdutorCollection() {
+        return produtorCollection;
+    }
+
+    public void setProdutorCollection(Collection<Produtor> produtorCollection) {
+        this.produtorCollection = produtorCollection;
+    }
+
+    public Collection<Cliente> getClienteCollection() {
+        return clienteCollection;
+    }
+
+    public void setClienteCollection(Collection<Cliente> clienteCollection) {
+        this.clienteCollection = clienteCollection;
+    }
+
+    public Collection<Veterinario> getVeterinarioCollection() {
+        return veterinarioCollection;
+    }
+
+    public void setVeterinarioCollection(Collection<Veterinario> veterinarioCollection) {
+        this.veterinarioCollection = veterinarioCollection;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) idutilizador;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (tipo != null ? tipo.hashCode() : 0);
-        result = 31 * result + (verificado != null ? verificado.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (idUtilizador != null ? idUtilizador.hashCode() : 0);
+        return hash;
     }
 
-    public Collection<Veterinario> getVeterinariosByIdutilizador() {
-        return veterinariosByIdutilizador;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Utilizador)) {
+            return false;
+        }
+        Utilizador other = (Utilizador) object;
+        if ((this.idUtilizador == null && other.idUtilizador != null) || (this.idUtilizador != null && !this.idUtilizador.equals(other.idUtilizador))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setVeterinariosByIdutilizador(Collection<Veterinario> veterinariosByIdutilizador) {
-        this.veterinariosByIdutilizador = veterinariosByIdutilizador;
+    @Override
+    public String toString() {
+        return "teste.Utilizador[ idUtilizador=" + idUtilizador + " ]";
     }
-
-    public Collection<Cliente> getClientesByIdutilizador() {
-        return clientesByIdutilizador;
-    }
-
-    public void setClientesByIdutilizador(Collection<Cliente> clientesByIdutilizador) {
-        this.clientesByIdutilizador = clientesByIdutilizador;
-    }
-
-    public Collection<Produtor> getProdutorsByIdutilizador() {
-        return produtorsByIdutilizador;
-    }
-
-    public void setProdutorsByIdutilizador(Collection<Produtor> produtorsByIdutilizador) {
-        this.produtorsByIdutilizador = produtorsByIdutilizador;
-    }
-
-    public Collection<Entidadecertificadora> getEntidadecertificadorasByIdutilizador() {
-        return entidadecertificadorasByIdutilizador;
-    }
-
-    public void setEntidadecertificadorasByIdutilizador(
-            Collection<Entidadecertificadora> entidadecertificadorasByIdutilizador) {
-        this.entidadecertificadorasByIdutilizador = entidadecertificadorasByIdutilizador;
-    }
+    
 }

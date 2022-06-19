@@ -1,94 +1,114 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.sql.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
-@IdClass(CertificacaoPK.class)
-@XmlRootElement
+@Table(name = "CERTIFICACAO")
 @NamedQueries({
-        @NamedQuery(name = "Certificacao.findAll", query = "SELECT c FROM Certificacao c")})
-public class Certificacao {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NamedQuery(name = "Certificacao.findAll", query = "SELECT c FROM Certificacao c"),
+    @NamedQuery(name = "Certificacao.findByIdCertificacao", query = "SELECT c FROM Certificacao c WHERE c.idCertificacao = :idCertificacao"),
+    @NamedQuery(name = "Certificacao.findByDataHora", query = "SELECT c FROM Certificacao c WHERE c.dataHora = :dataHora")})
+public class Certificacao implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @Column(name = "IDENTIDADECERTIFICADORA", insertable = false, updatable = false)
-    private short identidadecertificadora;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "IDPRODUTOR")
-    private short idprodutor;
-    @Basic
-    @Column(name = "DATAHORA")
-    private Date datahora;
-    @ManyToOne
-    @JoinColumn(name = "IDENTIDADECERTIFICADORA", referencedColumnName = "IDENTIDADECERTIFICADORA", nullable = false,insertable = false,updatable = false)
-    private Entidadecertificadora entidadecertificadoraByIdentidadecertificadora;
-    @ManyToOne
-    @JoinColumn(name = "IDPRODUTOR", referencedColumnName = "IDPRODUTOR", nullable = false,insertable = false,updatable = false)
-    private Produtor produtorByIdprodutor;
+    @Basic(optional = false)
+    @Column(name = "ID_CERTIFICACAO")
+    private BigDecimal idCertificacao;
+    @Column(name = "DATA_HORA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHora;
+    @JoinColumn(name = "ID_ENTIDADE", referencedColumnName = "ID_ENTIDADE")
+    @ManyToOne(optional = false)
+    private EntidadeCertificadora idEntidade;
+    @JoinColumn(name = "ID_PRODUTOR", referencedColumnName = "ID_PRODUTOR")
+    @ManyToOne(optional = false)
+    private Produtor idProdutor;
 
-    public short getIdentidadecertificadora() {
-        return identidadecertificadora;
+    public Certificacao() {
     }
 
-    public void setIdentidadecertificadora(short identidadecertificadora) {
-        this.identidadecertificadora = identidadecertificadora;
+    public Certificacao(BigDecimal idCertificacao) {
+        this.idCertificacao = idCertificacao;
     }
 
-    public short getIdprodutor() {
-        return idprodutor;
+    public BigDecimal getIdCertificacao() {
+        return idCertificacao;
     }
 
-    public void setIdprodutor(short idprodutor) {
-        this.idprodutor = idprodutor;
+    public void setIdCertificacao(BigDecimal idCertificacao) {
+        this.idCertificacao = idCertificacao;
     }
 
-    public Date getDatahora() {
-        return datahora;
+    public Date getDataHora() {
+        return dataHora;
     }
 
-    public void setDatahora(Date datahora) {
-        this.datahora = datahora;
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public EntidadeCertificadora getIdEntidade() {
+        return idEntidade;
+    }
 
-        Certificacao that = (Certificacao) o;
+    public void setIdEntidade(EntidadeCertificadora idEntidade) {
+        this.idEntidade = idEntidade;
+    }
 
-        if (identidadecertificadora != that.identidadecertificadora) return false;
-        if (idprodutor != that.idprodutor) return false;
-        if (datahora != null ? !datahora.equals(that.datahora) : that.datahora != null) return false;
+    public Produtor getIdProdutor() {
+        return idProdutor;
+    }
 
-        return true;
+    public void setIdProdutor(Produtor idProdutor) {
+        this.idProdutor = idProdutor;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) identidadecertificadora;
-        result = 31 * result + (int) idprodutor;
-        result = 31 * result + (datahora != null ? datahora.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (idCertificacao != null ? idCertificacao.hashCode() : 0);
+        return hash;
     }
 
-    public Entidadecertificadora getEntidadecertificadoraByIdentidadecertificadora() {
-        return entidadecertificadoraByIdentidadecertificadora;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Certificacao)) {
+            return false;
+        }
+        Certificacao other = (Certificacao) object;
+        if ((this.idCertificacao == null && other.idCertificacao != null) || (this.idCertificacao != null && !this.idCertificacao.equals(other.idCertificacao))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setEntidadecertificadoraByIdentidadecertificadora(Entidadecertificadora entidadecertificadoraByIdentidadecertificadora) {
-        this.entidadecertificadoraByIdentidadecertificadora = entidadecertificadoraByIdentidadecertificadora;
+    @Override
+    public String toString() {
+        return "teste.Certificacao[ idCertificacao=" + idCertificacao + " ]";
     }
-
-    public Produtor getProdutorByIdprodutor() {
-        return produtorByIdprodutor;
-    }
-
-    public void setProdutorByIdprodutor(Produtor produtorByIdprodutor) {
-        this.produtorByIdprodutor = produtorByIdprodutor;
-    }
-
-
+    
 }

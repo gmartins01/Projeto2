@@ -1,43 +1,76 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package proj2.bd.entity;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import java.sql.Date;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+/**
+ *
+ * @author gonca
+ */
 @Entity
 @Table(name = "GALINHA")
-@XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Galinha.findAll", query = "SELECT g FROM Galinha g"),
-        @NamedQuery(name = "Galinha.findAllByCod", query = "SELECT g FROM Galinha g WHERE g.codgalinha = :codgalinha"),
-        @NamedQuery(name = "Galinha.findByEspecie", query = "SELECT g FROM Galinha g WHERE g.especie = :especie") })
-public class Galinha {
+    @NamedQuery(name = "Galinha.findAll", query = "SELECT g FROM Galinha g"),
+    @NamedQuery(name = "Galinha.findByCodGalinha", query = "SELECT g FROM Galinha g WHERE g.codGalinha = :codGalinha"),
+    @NamedQuery(name = "Galinha.findByEspecie", query = "SELECT g FROM Galinha g WHERE g.especie = :especie"),
+    @NamedQuery(name = "Galinha.findByPeso", query = "SELECT g FROM Galinha g WHERE g.peso = :peso"),
+    @NamedQuery(name = "Galinha.findByDataNascimento", query = "SELECT g FROM Galinha g WHERE g.dataNascimento = :dataNascimento")})
+public class Galinha implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @Column(name = "CODGALINHA")
-    @SequenceGenerator(name = "GALINHA_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GALINHA_SEQ")
-    private short codgalinha;
-    @Basic
+    @Column(name = "COD_GALINHA")
+    private BigDecimal codGalinha;
+    @Basic(optional = false)
     @Column(name = "ESPECIE")
     private String especie;
-    @Basic
     @Column(name = "PESO")
-    private short peso;
-    @Basic
-    @Column(name = "DTNASCIMENTO")
-    private Date dtnascimento;
-    @OneToMany(mappedBy = "galinhasByCodgalinha")
-    private Collection<Vacinacao> vacinacaoByCodgalinha;
+    private Double peso;
+    @Column(name = "DATA_NASCIMENTO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataNascimento;
+    @OneToMany(mappedBy = "codGalinha")
+    private Collection<Produto> produtoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codGalinha")
+    private Collection<Vacinacao> vacinacaoCollection;
 
-    public short getCodgalinha() {
-        return codgalinha;
+    public Galinha() {
     }
 
-    public void setCodgalinha(short codgalinha) {
-        this.codgalinha = codgalinha;
+    public Galinha(BigDecimal codGalinha) {
+        this.codGalinha = codGalinha;
+    }
+
+    public Galinha(BigDecimal codGalinha, String especie) {
+        this.codGalinha = codGalinha;
+        this.especie = especie;
+    }
+
+    public BigDecimal getCodGalinha() {
+        return codGalinha;
+    }
+
+    public void setCodGalinha(BigDecimal codGalinha) {
+        this.codGalinha = codGalinha;
     }
 
     public String getEspecie() {
@@ -48,65 +81,61 @@ public class Galinha {
         this.especie = especie;
     }
 
-    public short getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(short peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 
-    public Date getDtnascimento() {
-        return dtnascimento;
+    public Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDtnascimento(Date dtnascimento) {
-        this.dtnascimento = dtnascimento;
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+    public Collection<Produto> getProdutoCollection() {
+        return produtoCollection;
+    }
 
-        Galinha galinha = (Galinha) o;
+    public void setProdutoCollection(Collection<Produto> produtoCollection) {
+        this.produtoCollection = produtoCollection;
+    }
 
-        if (codgalinha != galinha.codgalinha)
-            return false;
-        if (peso != galinha.peso)
-            return false;
-        if (especie != null ? !especie.equals(galinha.especie) : galinha.especie != null)
-            return false;
-        if (dtnascimento != null ? !dtnascimento.equals(galinha.dtnascimento) : galinha.dtnascimento != null)
-            return false;
+    public Collection<Vacinacao> getVacinacaoCollection() {
+        return vacinacaoCollection;
+    }
 
-        return true;
+    public void setVacinacaoCollection(Collection<Vacinacao> vacinacaoCollection) {
+        this.vacinacaoCollection = vacinacaoCollection;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) codgalinha;
-        result = 31 * result + (especie != null ? especie.hashCode() : 0);
-        result = 31 * result + (int) peso;
-        result = 31 * result + (dtnascimento != null ? dtnascimento.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (codGalinha != null ? codGalinha.hashCode() : 0);
+        return hash;
     }
 
-    public Collection<Vacinacao> getVacinacaosByCodgalinha() {
-        return vacinacaoByCodgalinha;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Galinha)) {
+            return false;
+        }
+        Galinha other = (Galinha) object;
+        if ((this.codGalinha == null && other.codGalinha != null) || (this.codGalinha != null && !this.codGalinha.equals(other.codGalinha))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setVacinacaosByCodgalinha(Collection<Vacinacao> vacinacaosByCodgalinha) {
-        this.vacinacaoByCodgalinha = vacinacaosByCodgalinha;
+    @Override
+    public String toString() {
+        return "teste.Galinha[ codGalinha=" + codGalinha + " ]";
     }
-
-    public Collection<Vacinacao> getVacinacaoByCodgalinha() {
-        return vacinacaoByCodgalinha;
-    }
-
-    public void setVacinacaoByCodgalinha(Collection<Vacinacao> vacinacaoByCodgalinha) {
-        this.vacinacaoByCodgalinha = vacinacaoByCodgalinha;
-    }
+    
 }

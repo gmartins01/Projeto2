@@ -1,10 +1,10 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.Cliente;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import proj2.bd.entity.*;
-import proj2.bd.entity.Cliente;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -34,8 +34,8 @@ public class ClienteBLL
 
         if (em == null) em = factory.createEntityManager();
 
-        Query q1 = em.createNamedQuery("Cliente.findAllById");
-        q1.setParameter("idcliente", idCliente);
+        Query q1 = em.createNamedQuery("Cliente.findByIdCliente");
+        q1.setParameter("idCliente", idCliente);
         Object obj = q1.getSingleResult();
 
         if(obj != null){

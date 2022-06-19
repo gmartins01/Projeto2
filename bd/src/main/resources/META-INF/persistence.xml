@@ -8,25 +8,23 @@
         <class>proj2.bd.entity.Certificacao</class>
         <class>proj2.bd.entity.Cliente</class>
         <class>proj2.bd.entity.Codpostais</class>
-        <class>proj2.bd.entity.Entidadecertificadora</class>
-        <class>proj2.bd.entity.Estado</class>
-        <class>proj2.bd.entity.Estadovenda</class>
+        <class>proj2.bd.entity.EntidadeCertificadora</class>
         <class>proj2.bd.entity.Galinha</class>
-        <class>proj2.bd.entity.Linhavenda</class>
-        <class>proj2.bd.entity.Loteovos</class>
+        <class>proj2.bd.entity.LinhaVenda</class>
+        <class>proj2.bd.entity.LoteOvos</class>
         <class>proj2.bd.entity.Produto</class>
         <class>proj2.bd.entity.Produtor</class>
-        <class>proj2.bd.entity.Racao</class>
         <class>proj2.bd.entity.Utilizador</class>
         <class>proj2.bd.entity.Vacina</class>
         <class>proj2.bd.entity.Vacinacao</class>
         <class>proj2.bd.entity.Venda</class>
         <class>proj2.bd.entity.Veterinario</class>
+        <class>proj2.bd.entity.Codpostais</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
-            <property name="javax.persistence.jdbc.user" value="proj2"/>
-            <property name="javax.persistence.jdbc.password" value="proj2"/>
+            <property name="javax.persistence.jdbc.user" value="proj"/>
+            <property name="javax.persistence.jdbc.password" value="proj"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>
