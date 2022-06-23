@@ -13,9 +13,9 @@
    <children>
       <Pane prefHeight="650.0" prefWidth="1100.0">
          <children>
-            <Pane prefHeight="154.0" prefWidth="1100.0">
+            <Pane prefHeight="114.0" prefWidth="1100.0" style="-fx-background-color: #2E8B57;">
                <children>
-                  <Label layoutX="428.0" layoutY="62.0" text="Informações de Utilizador" textAlignment="CENTER">
+                  <Label layoutX="428.0" layoutY="42.0" text="Informações de Utilizador" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -133,7 +133,7 @@
                   </Label>
                </children>
             </GridPane>
-            <Button layoutX="98.0" layoutY="558.0" mnemonicParsing="false" onAction="#voltar" style="-fx-background-color: white; -fx-border-color: black;" text="Voltar">
+            <Button layoutX="98.0" layoutY="558.0" mnemonicParsing="false" onAction="#voltar" style="-fx-background-color: #4c566a; -fx-border-color: black; -fx-text-fill: fff;" text="Voltar">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

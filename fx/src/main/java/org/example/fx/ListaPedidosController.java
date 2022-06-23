@@ -8,8 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import proj2.bd.BLL.*;
@@ -25,20 +24,21 @@ public class ListaPedidosController {
     private Scene scene;
     private Parent root;
 
-    @FXML
-    private TableView<InfoUtilizador> tabelaPedidoRegisto;
+    @FXML private Label labelErro;
 
-    @FXML
-    private TableColumn<InfoUtilizador,String> colunaNome;
+    @FXML private TableView<InfoUtilizador> tabelaPedidoRegisto;
 
-    @FXML
-    private TableColumn<InfoUtilizador,String> colunaTelefone;
+    @FXML private TableColumn<InfoUtilizador,String> colunaNome;
 
-    @FXML
-    private TableColumn<InfoUtilizador,String> colunaNIF;
+    @FXML private TableColumn<InfoUtilizador,String> colunaTelefone;
 
-    @FXML
-    private TableColumn<InfoUtilizador,String> colunaFuncao;
+    @FXML private TableColumn<InfoUtilizador,String> colunaNIF;
+
+    @FXML private TableColumn<InfoUtilizador,String> colunaFuncao;
+
+    @FXML private Button aceitaButton;
+
+    static boolean resposta;
 
     private final List<InfoUtilizador> info = new ArrayList<>();
 
@@ -108,10 +108,30 @@ public class ListaPedidosController {
     public void aceitaPedido(){
         InfoUtilizador infoU = tabelaPedidoRegisto.getSelectionModel().getSelectedItem();
 
+        if(infoU == null){
+            labelErro.setStyle("-fx-text-fill:RED;");
+            labelErro.setText("Selecione um utilizador na tabela!");
+            return;
+        }
+
+        /*
+        Button yesButton = new Button("Sim");
+        Button noButton = new Button("Não");
+
+        yesButton.setOnAction(event -> {
+            resposta = true;
+            w
+        });
+
+        aceitaButton.setOnAction(event -> AlertBox("Title of Window", "Alerta"));
+*/
         for (Utilizador u: UtilizadorBLL.readAll()){
             if (u.getIdUtilizador().equals(infoU.getIdUtilizador())){
                 u.setVerificado((short) 1);
+                UtilizadorBLL.update(u);
                 tabelaPedidoRegisto.getItems().removeAll(tabelaPedidoRegisto.getSelectionModel().getSelectedItem());
+                labelErro.setStyle("-fx-text-fill:GREEN;");
+                labelErro.setText("Pedido aceite com sucesso!");
                 return;
             }
         }
@@ -121,13 +141,21 @@ public class ListaPedidosController {
     public void rejeitaPedido(){
         InfoUtilizador infoU = tabelaPedidoRegisto.getSelectionModel().getSelectedItem();
 
+        if(infoU == null){
+            labelErro.setText("Selecione um utilizador na tabela!");
+            labelErro.setStyle("-fx-text-fill:RED;");
+            return;
+        }
+
         if(infoU.getFuncao().equals("Produtor")){
            for (Utilizador user: UtilizadorBLL.readAll()){
                for (Produtor prod: ProdutorBLL.readAll()){
-                   if (infoU.getIdUtilizador().equals(user.getIdUtilizador()) && user.getIdUtilizador().equals(prod.getIdUtilizador())){
-                     ProdutorBLL.delete(prod);
+                   if (infoU.getIdUtilizador().equals(user.getIdUtilizador()) && user.equals(prod.getIdUtilizador())){
+                       ProdutorBLL.delete(prod);
                        UtilizadorBLL.delete(user);
                        tabelaPedidoRegisto.getItems().removeAll(tabelaPedidoRegisto.getSelectionModel().getSelectedItem());
+                       labelErro.setStyle("-fx-text-fill:GREEN;");
+                       labelErro.setText("Pedido rejeitado com sucesso!");
                        return;
                    }
                }
@@ -137,10 +165,12 @@ public class ListaPedidosController {
         if(infoU.getFuncao().equals("Veterinario")){
             for (Utilizador user: UtilizadorBLL.readAll()){
                 for (Veterinario vet: VeterinarioBLL.readAll()){
-                    if (infoU.getIdUtilizador().equals(user.getIdUtilizador()) && user.getIdUtilizador().equals(vet.getIdUtilizador())){
+                    if (infoU.getIdUtilizador().equals(user.getIdUtilizador()) && user.equals(vet.getIdUtilizador())){
                         VeterinarioBLL.delete(vet);
                         UtilizadorBLL.delete(user);
                         tabelaPedidoRegisto.getItems().removeAll(tabelaPedidoRegisto.getSelectionModel().getSelectedItem());
+                        labelErro.setStyle("-fx-text-fill:GREEN;");
+                        labelErro.setText("Pedido rejeitado com sucesso!");
                         return;
                     }
                 }
@@ -150,10 +180,12 @@ public class ListaPedidosController {
         if(infoU.getFuncao().equals("Entidade Certificadora")){
             for (Utilizador user: UtilizadorBLL.readAll()){
                 for (EntidadeCertificadora ent: EntidadecertificadoraBLL.readAll()){
-                    if (infoU.getIdUtilizador().equals(user.getIdUtilizador()) && user.getIdUtilizador().equals(ent.getIdUtilizador())){
+                    if (infoU.getIdUtilizador().equals(user.getIdUtilizador()) && user.equals(ent.getIdUtilizador())){
                         EntidadecertificadoraBLL.delete(ent);
                         UtilizadorBLL.delete(user);
                         tabelaPedidoRegisto.getItems().removeAll(tabelaPedidoRegisto.getSelectionModel().getSelectedItem());
+                        labelErro.setStyle("-fx-text-fill:GREEN;");
+                        labelErro.setText("Pedido rejeitado com sucesso!");
                         return;
                     }
                 }
@@ -163,6 +195,14 @@ public class ListaPedidosController {
     }
 
     public void verDetalhes(ActionEvent event) throws IOException{
+        InfoUtilizador infoU = tabelaPedidoRegisto.getSelectionModel().getSelectedItem();
+
+        if(infoU == null){
+            labelErro.setStyle("-fx-text-fill:RED;");
+            labelErro.setText("Selecione um utilizador na tabela!");
+            return;
+        }
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Admin/InfoUser.fxml"));
         Parent root = loader.load();
@@ -171,6 +211,7 @@ public class ListaPedidosController {
         AdmInfoUserController infoController = loader.getController();
         infoController.initData(tabelaPedidoRegisto.getSelectionModel().getSelectedItem());
         stage.setTitle("Informações de utilizador");
+        labelErro.setText("");
         stage.setScene(scene);
         stage.show();
     }

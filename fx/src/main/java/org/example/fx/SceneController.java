@@ -49,37 +49,39 @@ public class SceneController {
 
         else if(user.getVerificado()==0){
             labelLogin.setText("Utilizador não está verificado");
-            return;
+        }
+
+        else{
+            if (tipoUser.equals("Administrador")){
+                Parent root = FXMLLoader.load(getClass().getResource("Admin/MenuAdmin.fxml"));
+                stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setTitle("Menu de Administrador");
+                stage.setScene(scene);
+                stage.show();
+            }
+
+            if(tipoUser.equals("Veterinario")){
+                Parent root = FXMLLoader.load(getClass().getResource("Veterinario/MenuVeterinario.fxml"));
+                stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setTitle("Menu de Veterinário");
+                stage.setScene(scene);
+                stage.show();
+            }
+
+            if(tipoUser.equals("Entidade Certificadora")){
+                UtilizadorBLL.getuserLogado().add(user);
+                Parent root = FXMLLoader.load(getClass().getResource("EntidadeCertificadora/MenuEntCertificadora.fxml"));
+                stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setTitle("Menu de Entidade Certificadora");
+                stage.setScene(scene);
+                stage.show();
+            }
         }
 
 
-        if (tipoUser.equals("Administrador")){
-            Parent root = FXMLLoader.load(getClass().getResource("Admin/MenuAdmin.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setTitle("Menu de Administrador");
-            stage.setScene(scene);
-            stage.show();
-        }
-
-        if(tipoUser.equals("Veterinario")){
-            Parent root = FXMLLoader.load(getClass().getResource("Veterinario/MenuVeterinario.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setTitle("Menu de Veterinário");
-            stage.setScene(scene);
-            stage.show();
-        }
-
-        if(tipoUser.equals("Entidade Certificadora")){
-            UtilizadorBLL.getuserLogado().add(user);
-            Parent root = FXMLLoader.load(getClass().getResource("EntidadeCertificadora/MenuEntCertificadora.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setTitle("Menu de Entidade Certificadora");
-            stage.setScene(scene);
-            stage.show();
-        }
 
 
     }

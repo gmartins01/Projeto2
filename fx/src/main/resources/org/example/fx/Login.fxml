@@ -5,12 +5,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.fx.SceneController">
    <children>
-      <AnchorPane layoutX="576.0" layoutY="91.0" prefHeight="468.0" prefWidth="427.0" style="-fx-background-color: #4c566a; -fx-border-color: #ebcb8b; -fx-border-width: 5;">
+      <ImageView fitHeight="753.0" fitWidth="1208.0" layoutX="-17.0" layoutY="-35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Admin/imgs/fOTO-galinha.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="576.0" layoutY="91.0" prefHeight="468.0" prefWidth="427.0" style="-fx-background-color: #2E8B57; -fx-border-color: #ebcb8b; -fx-border-width: 0;">
          <children>
             <TextField fx:id="CampoUsername" layoutX="59.0" layoutY="119.0" prefHeight="30.0" prefWidth="310.0" promptText="Nome de Utilizador" style="-fx-border-color: #eceff4; -fx-text-fill: #2e3440; -fx-prompt-text-fill: #808080;">
                <font>
@@ -27,15 +34,15 @@
             </PasswordField>
             <Label layoutX="141.0" layoutY="51.0" text="Início de Sessão" textAlignment="CENTER" textFill="#eceff4">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="118.0" layoutY="309.0" mnemonicParsing="false" onAction="#login" prefHeight="33.0" prefWidth="192.0" style="-fx-background-color: #5e81ac;" text="Iniciar Sessão" textFill="WHITE">
+            <Button layoutX="118.0" layoutY="309.0" mnemonicParsing="false" onAction="#login" prefHeight="33.0" prefWidth="192.0" style="-fx-background-color: #4c566a;" text="Iniciar Sessão" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="registoBotao" layoutX="118.0" layoutY="376.0" mnemonicParsing="false" onAction="#registo" prefHeight="30.0" prefWidth="192.0" style="-fx-background-color: #5e81ac;" text="Solicitar Registo" textFill="WHITE">
+            <Button fx:id="registoBotao" layoutX="118.0" layoutY="376.0" mnemonicParsing="false" onAction="#registo" prefHeight="30.0" prefWidth="192.0" style="-fx-background-color: #4c566a;" text="Solicitar Registo" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -47,5 +54,10 @@
             </Label>
          </children>
       </AnchorPane>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="197.0" prefHeight="206.0" prefWidth="427.0" style="-fx-text-fill: fff;" text="Bem-vindo!">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

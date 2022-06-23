@@ -1,6 +1,9 @@
 package proj2.bd.BLL;
 
+import proj2.bd.entity.EntidadeCertificadora;
+import proj2.bd.entity.Produtor;
 import proj2.bd.entity.Utilizador;
+import proj2.bd.entity.Veterinario;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,6 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class UtilizadorBLL
 {
@@ -64,6 +68,17 @@ public class UtilizadorBLL
         return null;
     }
 
+    public static void update(Utilizador user){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+
+        if (em == null) em = factory.createEntityManager();
+
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
+    }
+
     public static void delete(Utilizador user){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -74,5 +89,40 @@ public class UtilizadorBLL
         em.remove(user);
         em.getTransaction().commit();
     }
+
+
+    public static boolean verificaUsername(String username){
+
+        for(Utilizador u : UtilizadorBLL.readAll()){
+            if (u.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean verificaNif(String nif){
+
+        for(Produtor p : ProdutorBLL.readAll()){
+            if (p.getNif()==(long) Integer.parseInt(nif)){
+                return true;
+            }
+        }
+
+        for(Veterinario v : VeterinarioBLL.readAll()){
+            if (v.getNif()==(long) Integer.parseInt(nif)){
+                return true;
+            }
+        }
+
+        for(EntidadeCertificadora e : EntidadecertificadoraBLL.readAll()){
+            if (e.getNif()==(long) Integer.parseInt(nif)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 }

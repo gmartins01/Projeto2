@@ -7,17 +7,7 @@ package proj2.bd.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -41,6 +31,7 @@ public class EntidadeCertificadora implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_ENTIDADE")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private BigDecimal idEntidade;
     @Basic(optional = false)
     @Column(name = "NOME")
